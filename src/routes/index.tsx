@@ -23,6 +23,8 @@ interface RouteConfigProps {
   privateRoute: boolean;
 }
 
+// Private routes are only visible after 
+
 const routesConfig = {
   landing: {
     path: ROOT_ROUTE,
@@ -89,6 +91,7 @@ const AppRoutes = () => {
         );
       })}
 
+      {/* If nothing else matches, this will match */}
       <Route path="*" render={() => <PageNotFound />} />
     </Switch>
   );
