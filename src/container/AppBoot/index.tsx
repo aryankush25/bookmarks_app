@@ -23,7 +23,7 @@ function App() {
         </div>
 
         {/* react-toastify is used to add notifications */}
-        <ToastContainer
+        {/* <ToastContainer
           autoClose={3000}
           position="bottom-left"
           hideProgressBar
@@ -32,7 +32,7 @@ function App() {
           rtl={false}
           draggable
           pauseOnHover={false}
-        />
+        /> */}
       </PersistGate>
     </Provider>
   );
