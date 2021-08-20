@@ -2,18 +2,15 @@ import React from 'react';
 import { useHomeHook } from './hooks';
 import SharedButton from '../../components/shared/SharedButton';
 import './style.scss';
-import { Tabs, TabList, Tab } from 'react-tabs';
-import image from './notification.png';
-import f1 from './folder@3x.png';
-import f2 from './right-arrow-black-triangle copy 3@3x.png';
-import b1 from './ic_Dropdown@3x.png';
-import b2 from './Shivam Chaudhary@3x.png';
-import b3 from './Profile@3x.png';
-import b4 from './Group 2@3x.png';
-import logoo from './LOGO@3x.png';
-
-import f4 from './right-arrow-black-triangle copy@3x.png';
-//import { IoMdArrowDropright } from 'react-icons/fa';
+import f1 from '../../assets/images/folder@3x.png';
+import f2 from '../../assets/images/right-arrow-black-triangle copy 3@3x.png';
+import b1 from '../../assets/images/ic_Dropdown@3x.png';
+import b2 from '../../assets/images/Shivam Chaudhary@3x.png';
+import b3 from '../../assets/images/Profile@3x.png';
+import b4 from '../../assets/images/Group 2@3x.png';
+import logoo from '../../assets/images/LOGO@3x.png';
+import img1 from '../../assets/images/react-logo.png';
+import f4 from '../../assets/images/right-arrow-black-triangle copy@3x.png';
 
 const Home = () => {
   const { logoutRequestHandler } = useHomeHook();
