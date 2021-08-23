@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import './styles.scss';
+import './Signup.scss';
 import logo from './../../assets/images/bookmarks-app-logo.png';
 
 const Signup = () => {
@@ -23,45 +23,55 @@ const Signup = () => {
   };
 
   return (
-    <div className="container">
+    <div className="signup-wrapper">
       <div className="image">
         <img src={logo} alt="Image Not Available"></img>
       </div>
       <div className="fields-container">
-        <div className="signup-page">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <label>Full Name</label>
-            <input {...register('Full Name', { required: true })} />
-            {errors['Full Name'] && <p>Full Name Field is Required</p>}
-
-            <label>User Name</label>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="input-container">
             <input
-              style={{ border: errors['User Name'] ? '1px solid red' : '' }}
+              style={{
+                borderBottom: errors['Full Name'] ? '1px solid red' : ''
+              }}
+              {...register('Full Name', { required: true })}
+            />
+            <label className="floating-label">Full Name</label>
+          </div>
+          {errors['Full Name'] && <p>Full Name Field is Required</p>}
+
+          <div className="input-container">
+            <input
+              style={{
+                borderBottom: errors['User Name'] ? '1px solid red' : ''
+              }}
               autoFocus
               {...register('User Name', { required: true, minLength: 5 })}
             />
-            {errors['User Name'] && <p>User Name Field is required</p>}
-            {errors['User Name'] && touchedFields['User Name'] && (
-              <p>Minimum length is 5</p>
-            )}
-
-            <label>Password</label>
+            <label className="floating-label">User Name</label>
+          </div>
+          {errors['User Name'] && <p>User Name Field is required</p>}
+          {errors['User Name'] && touchedFields['User Name'] && (
+            <p>Minimum length is 5</p>
+          )}
+          <div className="input-container">
             <input
-              style={{ border: errors.Password ? '1px solid red' : '' }}
+              style={{ borderBottom: errors.Password ? '1px solid red' : '' }}
               {...register('Password', { required: true, maxLength: 8 })}
             />
-            {errors.Password && <p>Password field is required</p>}
-            {errors.Password && touchedFields.Password && (
-              <p>Maximum length of Password is 8</p>
-            )}
-            <input
-              className="submitButton"
-              type="submit"
-              value="continue"
-              disabled={!isValid}
-            />
-          </form>
-        </div>
+            <label className="floating-label">Password</label>
+          </div>
+          {errors.Password && <p>Password field is required</p>}
+          {errors.Password && touchedFields.Password && (
+            <p>Maximum length of Password is 8</p>
+          )}
+          <input
+            className="submitButton"
+            type="submit"
+            value="continue"
+            disabled={!isValid}
+          />
+        </form>
       </div>
     </div>
   );
