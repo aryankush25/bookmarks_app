@@ -1,7 +1,7 @@
 import React from 'react';
 
 const InputField = ({ label, type, style, autofocus }) => (
-  <div className="input-field">
+  <div>
     <label>{label}</label>
     <input style={style} autoFocus={autofocus} />
   </div>

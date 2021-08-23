@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import './Signup.scss';
 import logo from './../../assets/images/bookmarks-app-logo.png';
+import { userInfo } from 'os';
 
 const Signup = () => {
   const {
@@ -22,6 +23,32 @@ const Signup = () => {
     alert(JSON.stringify(data));
   };
 
+  const [FullName, setFullName] = useState('');
+  const [Password, setPassword] = useState('');
+  const [UserName, setUserName] = useState('');
+
+  function handleChangeFullName(e) {
+    setFullName(e.target.value);
+  }
+
+  function handleChangeUserName(e) {
+    setUserName(e.target.value);
+  }
+
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
+  }
+
+  const fullNameRegister = register('Full Name', { required: true });
+  const userNameRegister = register('User Name', {
+    required: true,
+    minLength: 5
+  });
+  const passwordRegister = register('Password', {
+    required: true,
+    maxLength: 8
+  });
+
   return (
     <div className="signup-wrapper">
       <div className="image">
@@ -31,12 +58,19 @@ const Signup = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-container">
             <input
+              value={FullName}
+              type="text"
+              autoFocus
               style={{
                 borderBottom: errors['Full Name'] ? '1px solid red' : ''
               }}
-              {...register('Full Name', { required: true })}
+              {...fullNameRegister}
+              onChange={(e) => {
+                fullNameRegister.onChange(e);
+                handleChangeFullName(e);
+              }}
             />
-            <label className="floating-label">Full Name</label>
+            <label className={FullName && 'filled'}>Full Name</label>
           </div>
           {errors['Full Name'] && <p>Full Name Field is Required</p>}
 
@@ -45,10 +79,15 @@ const Signup = () => {
               style={{
                 borderBottom: errors['User Name'] ? '1px solid red' : ''
               }}
-              autoFocus
-              {...register('User Name', { required: true, minLength: 5 })}
+              value={UserName}
+              type="text"
+              {...userNameRegister}
+              onChange={(e) => {
+                userNameRegister.onChange(e);
+                handleChangeUserName(e);
+              }}
             />
-            <label className="floating-label">User Name</label>
+            <label className={UserName && 'filled'}>User Name</label>
           </div>
           {errors['User Name'] && <p>User Name Field is required</p>}
           {errors['User Name'] && touchedFields['User Name'] && (
@@ -57,9 +96,15 @@ const Signup = () => {
           <div className="input-container">
             <input
               style={{ borderBottom: errors.Password ? '1px solid red' : '' }}
-              {...register('Password', { required: true, maxLength: 8 })}
+              value={Password}
+              type="text"
+              {...passwordRegister}
+              onChange={(e) => {
+                passwordRegister.onChange(e);
+                handleChangePassword(e);
+              }}
             />
-            <label className="floating-label">Password</label>
+            <label className={Password && 'filled'}>Password</label>
           </div>
           {errors.Password && <p>Password field is required</p>}
           {errors.Password && touchedFields.Password && (

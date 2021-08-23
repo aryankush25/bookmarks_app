@@ -26,10 +26,24 @@ const Login = () => {
     alert(JSON.stringify(data));
   };
 
-  const [value, setValue] = useState('');
-  function handleChange(e) {
-    setValue(e.target.value);
+  const [UserNamevalue, setCurrentusernameValue] = useState('');
+  const [PasswordValue, setCurrentPasswordValue] = useState('');
+  function handleChangUserName(e) {
+    setCurrentusernameValue(e.target.value);
   }
+  function handleChangePassword(e) {
+    setCurrentPasswordValue(e.target.value);
+  }
+
+  const userNameRegister = register('User Name', {
+    required: true,
+    minLength: 5
+  });
+
+  const passwordRegister = register('Password', {
+    required: true,
+    maxLength: 8
+  });
 
   return (
     <div className="login-wrapper">
@@ -40,19 +54,23 @@ const Login = () => {
       <div className="fields-container">
         <div className="auth">
           <h1 className="main-welcome">Welcome back!</h1>
-          <h3 className="subText">Log in to your account</h3>
+          <h3 className="subText">Log in to your account.</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-container">
               <input
-                value={value}
-                onChange={handleChange}
+                value={UserNamevalue}
+                type="text"
                 autoFocus
                 style={{
                   borderBottom: errors['User Name'] ? '1px solid red' : ''
                 }}
-                {...register('User Name', { required: true, minLength: 5 })}
+                {...userNameRegister}
+                onChange={(e) => {
+                  userNameRegister.onChange(e);
+                  handleChangUserName(e);
+                }}
               />
-              <label className="floating-label">User Name</label>
+              <label className={UserNamevalue && 'filled'}>User Name</label>
             </div>
 
             {/* <InputField
@@ -70,9 +88,15 @@ const Login = () => {
             <div className="input-container">
               <input
                 style={{ borderBottom: errors.Password ? '1px solid red' : '' }}
-                {...register('Password', { required: true, maxLength: 8 })}
+                value={PasswordValue}
+                type="text"
+                {...passwordRegister}
+                onChange={(e) => {
+                  passwordRegister.onChange(e);
+                  handleChangePassword(e);
+                }}
               />
-              <label className="floating-label">Password</label>
+              <label className={PasswordValue && 'filled'}>Password</label>
             </div>
             {/* {errors.Password && <p>Password field is required</p>} */}
             {errors.Password && touchedFields.Password && (
