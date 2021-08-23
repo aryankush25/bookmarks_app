@@ -7,12 +7,10 @@ const Home = () => {
   const { logoutRequestHandler } = useHomeHook();
 
   return (
-    <>
-      <div>
-        <Header />
-        <SharedButton label="LogOut" onClick={logoutRequestHandler} />
-      </div>
-    </>
+    <div>
+      <Header />
+      <SharedButton label="LogOut" onClick={logoutRequestHandler} />
+    </div>
   );
 };
 

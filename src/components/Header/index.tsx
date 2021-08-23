@@ -1,9 +1,11 @@
 import React from 'react';
+
 import './styles.scss';
 import img1 from '../../assets/images/Group 17@3x.png';
+
 export default function Home() {
   return (
-    <div className="container">
+    <div className="header-container">
       <div className="main">
         <section>
           <form action="">
@@ -31,9 +33,9 @@ export default function Home() {
             </button>
           </form>
         </section>
-        <aside className="right">
-          <img src={img1} alt="" className="img" />
-        </aside>
+        <div className="right">
+          <img src={img1} alt="" className="img-container" />
+        </div>
       </div>
     </div>
   );
