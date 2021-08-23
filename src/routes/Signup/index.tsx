@@ -15,7 +15,7 @@ const Signup = () => {
 
   type Inputs = {
     'Full Name': string;
-    'User Name': string;
+    EmailID: string;
     Password: string;
   };
 
@@ -25,14 +25,14 @@ const Signup = () => {
 
   const [FullName, setFullName] = useState('');
   const [Password, setPassword] = useState('');
-  const [UserName, setUserName] = useState('');
+  const [EmailID, setEmail] = useState('');
 
   function handleChangeFullName(e) {
     setFullName(e.target.value);
   }
 
-  function handleChangeUserName(e) {
-    setUserName(e.target.value);
+  function handleChangeEmail(e) {
+    setEmail(e.target.value);
   }
 
   function handleChangePassword(e) {
@@ -40,9 +40,12 @@ const Signup = () => {
   }
 
   const fullNameRegister = register('Full Name', { required: true });
-  const userNameRegister = register('User Name', {
+  const EmailRegister = register('EmailID', {
     required: true,
-    minLength: 5
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      message: 'Invalid Email Address'
+    }
   });
   const passwordRegister = register('Password', {
     required: true,
@@ -77,22 +80,20 @@ const Signup = () => {
           <div className="input-container">
             <input
               style={{
-                borderBottom: errors['User Name'] ? '1px solid red' : ''
+                borderBottom: errors.EmailID ? '1px solid red' : ''
               }}
-              value={UserName}
+              value={EmailID}
               type="text"
-              {...userNameRegister}
+              {...EmailRegister}
               onChange={(e) => {
-                userNameRegister.onChange(e);
-                handleChangeUserName(e);
+                EmailRegister.onChange(e);
+                handleChangeEmail(e);
               }}
             />
-            <label className={UserName && 'filled'}>User Name</label>
+            <label className={EmailID && 'filled'}>Email ID</label>
           </div>
-          {errors['User Name'] && <p>User Name Field is required</p>}
-          {errors['User Name'] && touchedFields['User Name'] && (
-            <p>Minimum length is 5</p>
-          )}
+          {errors['User Name'] && <p>Email ID Field is required</p>}
+          {errors.EmailID && <p>{errors.EmailID.message} </p>}
           <div className="input-container">
             <input
               style={{ borderBottom: errors.Password ? '1px solid red' : '' }}

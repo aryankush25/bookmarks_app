@@ -50,6 +50,7 @@ body {
   p {
     color: #dd2a3b;
     font-size: 9px;
+    margin-top: -10px;
   }
 
   p::before {
@@ -135,7 +136,6 @@ body {
   .signUp:hover,
   button[type='submit']:hover:enabled,
   input[type='submit']:hover:enabled {
-    background: #b5e6f2;
     cursor: pointer;
   }
 

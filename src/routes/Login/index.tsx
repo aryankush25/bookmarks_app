@@ -18,7 +18,7 @@ const Login = () => {
   });
 
   type Inputs = {
-    'User Name': string;
+    EmailID: string;
     Password: string;
   };
 
@@ -26,18 +26,21 @@ const Login = () => {
     alert(JSON.stringify(data));
   };
 
-  const [UserNamevalue, setCurrentusernameValue] = useState('');
+  const [EmailValue, setCurrentEmailValue] = useState('');
   const [PasswordValue, setCurrentPasswordValue] = useState('');
-  function handleChangUserName(e) {
-    setCurrentusernameValue(e.target.value);
+  function handleChangeEmail(e) {
+    setCurrentEmailValue(e.target.value);
   }
   function handleChangePassword(e) {
     setCurrentPasswordValue(e.target.value);
   }
 
-  const userNameRegister = register('User Name', {
+  const EmailRegister = register('EmailID', {
     required: true,
-    minLength: 5
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      message: 'Invalid Email Address'
+    }
   });
 
   const passwordRegister = register('Password', {
@@ -47,7 +50,7 @@ const Login = () => {
 
   return (
     <div className="login-wrapper">
-      <div className="image">
+      <div className="image-container">
         <img src={logo} alt="Image Not Available"></img>
       </div>
 
@@ -58,32 +61,21 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-container">
               <input
-                value={UserNamevalue}
+                value={EmailValue}
                 type="text"
                 autoFocus
                 style={{
                   borderBottom: errors['User Name'] ? '1px solid red' : ''
                 }}
-                {...userNameRegister}
+                {...EmailRegister}
                 onChange={(e) => {
-                  userNameRegister.onChange(e);
-                  handleChangUserName(e);
+                  EmailRegister.onChange(e);
+                  handleChangeEmail(e);
                 }}
               />
-              <label className={UserNamevalue && 'filled'}>User Name</label>
+              <label className={EmailValue && 'filled'}>Email ID</label>
             </div>
-
-            {/* <InputField
-              label="User Name"
-              style={{ border: errors['User Name'] ? '1px solid red' : '' }}
-              autofocus="true"
-              type="input"
-              {...register('User Name', { required: true, minLength: 5 })}
-            /> */}
-            {/* {errors['User Name'] && <p>User Name Field is required</p>} */}
-            {errors['User Name'] && touchedFields['User Name'] && (
-              <p>Minimum length is 5</p>
-            )}
+            {errors.EmailID && <p>{errors.EmailID.message} </p>}
 
             <div className="input-container">
               <input
