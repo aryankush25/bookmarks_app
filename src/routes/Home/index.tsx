@@ -11,6 +11,7 @@ import b4 from '../../assets/images/Group 2@3x.png';
 import logoo from '../../assets/images/LOGO@3x.png';
 import img1 from '../../assets/images/react-logo.png';
 import f4 from '../../assets/images/right-arrow-black-triangle copy@3x.png';
+import FolderChart from '../../components/Listing';
 
 const Home = () => {
   const { logoutRequestHandler } = useHomeHook();
@@ -67,53 +68,8 @@ const Home = () => {
           </ul>
         </div>
         <br />
-        <div className="layout2">
-          <br />
-          <ul>
-            <ul className="box1">
-              <li>
-                <img className="sign10" src={f2}></img>
-                <img className="sign1" src={f1}></img>
-                Folder 1
-                <ul className="box1">
-                  <br />
-                  <br />
-                  <li>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img className="sign1" src={f1}></img>
-                    Folder 2
-                  </li>
-                </ul>
-                <ul className="box1">
-                  <br />
-                  <br />
-                  <li>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <img className="sign1" src={f1}></img>
-                    Folder 3
-                  </li>
-                </ul>
-              </li>
-              <br />
-              <br />
-              <li>
-                <img className="sign2" src={f4}></img>
-                <img className="sign1" src={f1}></img>Folder 4
-              </li>
-              <br />
-              <br />
-              <li>
-                <img className="sign2" src={f4}></img>
-                <img className="sign1" src={f1}></img>Folder 5
-              </li>
-              <br />
-              <br />
-              <li>
-                <img className="sign2" src={f4}></img>
-                <img className="sign1" src={f1}></img>Folder 6
-              </li>
-            </ul>
-          </ul>
+        <div className="Folder-layout">
+          <FolderChart />
         </div>
       </div>
       <SharedButton label="LogOut" onClick={logoutRequestHandler} />
