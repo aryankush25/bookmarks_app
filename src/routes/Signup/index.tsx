@@ -6,8 +6,8 @@ import SharedContinueButton from '../../components/shared/SharedContinueButton';
 import './styles.scss';
 
 type Inputs = {
-  fullName: string;
-  emailID: string;
+  name: string;
+  email: string;
   password: string;
 };
 
@@ -22,6 +22,23 @@ const Signup = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(JSON.stringify(data));
+
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    let raw = JSON.stringify(data);
+
+    let requestOptions: RequestInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch('https://bookmarks-app-server.herokuapp.com/register', requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log('error', error));
   };
 
   const [fullName, setFullName] = useState('');
@@ -40,8 +57,8 @@ const Signup = () => {
     setPassword(e.target.value);
   }
 
-  const fullNameRegister = register('fullName', { required: true });
-  const EmailRegister = register('emailID', {
+  const fullNameRegister = register('name', { required: true });
+  const EmailRegister = register('email', {
     required: true,
     pattern: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -60,7 +77,7 @@ const Signup = () => {
         <div className="sign-up-form">
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputField
-              errorName={errors.fullName}
+              errorName={errors.name}
               value={fullName}
               type="text"
               register={fullNameRegister}
@@ -69,13 +86,13 @@ const Signup = () => {
                 handleChangeFullName(e);
               }}
               labelName="Full Name"
-              errorMessageValues={errors.fullName}
+              errorMessageValues={errors.name}
               errorMessage="Full Name Field is required"
               autofocusEnabled="true"
             />
 
             <InputField
-              errorName={errors.emailID}
+              errorName={errors.email}
               value={emailID}
               type="text"
               register={EmailRegister}
@@ -84,7 +101,7 @@ const Signup = () => {
                 handleChangeEmail(e);
               }}
               labelName="Email ID"
-              errorMessageValues={errors.emailID}
+              errorMessageValues={errors.email}
               errorMessage="Invalid Email Address"
             />
 

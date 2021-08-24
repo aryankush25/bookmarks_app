@@ -8,7 +8,7 @@ import AuthContainer from '../../container/AuthContainer';
 import './styles.scss';
 
 type Inputs = {
-  emailID: string;
+  email: string;
   password: string;
 };
 
@@ -25,6 +25,23 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(JSON.stringify(data));
+
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify(data);
+
+    var requestOptions: RequestInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch('https://bookmarks-app-server.herokuapp.com/login', requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log('error', error));
   };
 
   const [emailValue, setCurrentEmailValue] = useState('');
@@ -36,7 +53,7 @@ const Login = () => {
     setCurrentPasswordValue(e.target.value);
   }
 
-  const EmailRegister = register('emailID', {
+  const EmailRegister = register('email', {
     required: true,
     pattern: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -59,7 +76,7 @@ const Login = () => {
           <h3 className="subText">Log in to your account.</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputField
-              errorName={errors.emailID}
+              errorName={errors.email}
               value={emailValue}
               type="text"
               register={EmailRegister}
@@ -69,7 +86,7 @@ const Login = () => {
               }}
               labelName="Email ID"
               errorMessage="Email ID is not valid"
-              errorMessageValues={errors.emailID}
+              errorMessageValues={errors.email}
               autofocusEnabled="true"
             />
 
