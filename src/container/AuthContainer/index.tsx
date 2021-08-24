@@ -1,17 +1,11 @@
 import React from 'react';
 import logo from './../../assets/images/bookmarks-app-logo.png';
-import { useForm, SubmitHandler } from 'react-hook-form';
 import './styles.scss';
 
 const AuthContainer = () => {
-  type Inputs = {
-    EmailID: string;
-    Password: string;
-  };
-
   return (
-    <div className="float-container">
-      <div className="auth"></div>
+    <div className="image-container">
+      <img src={logo} alt="Image Not Available"></img>
     </div>
   );
 };

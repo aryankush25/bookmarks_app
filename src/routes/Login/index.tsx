@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SIGNUP_ROUTE } from './../../utils/routesConstants';
-import './login.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import logo from './../../assets/images/bookmarks-app-logo.png';
-import InputField from '../../components/InputField';
+import InputField from '../../components/shared/InputField';
+import SharedContinueButton from '../../components/shared/SharedContinueButton';
+import AuthContainer from '../../container/AuthContainer';
+import './styles.scss';
+
+type Inputs = {
+  emailID: string;
+  password: string;
+};
 
 const Login = () => {
   const history = useHistory();
@@ -17,17 +23,12 @@ const Login = () => {
     mode: 'onChange'
   });
 
-  type Inputs = {
-    EmailID: string;
-    Password: string;
-  };
-
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    alert(JSON.stringify(data));
+    console.log(JSON.stringify(data));
   };
 
-  const [EmailValue, setCurrentEmailValue] = useState('');
-  const [PasswordValue, setCurrentPasswordValue] = useState('');
+  const [emailValue, setCurrentEmailValue] = useState('');
+  const [passwordValue, setCurrentPasswordValue] = useState('');
   function handleChangeEmail(e) {
     setCurrentEmailValue(e.target.value);
   }
@@ -35,7 +36,7 @@ const Login = () => {
     setCurrentPasswordValue(e.target.value);
   }
 
-  const EmailRegister = register('EmailID', {
+  const EmailRegister = register('emailID', {
     required: true,
     pattern: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -43,70 +44,64 @@ const Login = () => {
     }
   });
 
-  const passwordRegister = register('Password', {
+  const passwordRegister = register('password', {
     required: true,
     maxLength: 8
   });
 
   return (
     <div className="login-wrapper">
-      <div className="image-container">
-        <img src={logo} alt="Image Not Available"></img>
-      </div>
+      <AuthContainer />
 
       <div className="fields-container">
         <div className="auth">
           <h1 className="main-welcome">Welcome back!</h1>
           <h3 className="subText">Log in to your account.</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="input-container">
-              <input
-                value={EmailValue}
-                type="text"
-                autoFocus
-                style={{
-                  borderBottom: errors['User Name'] ? '1px solid red' : ''
-                }}
-                {...EmailRegister}
-                onChange={(e) => {
-                  EmailRegister.onChange(e);
-                  handleChangeEmail(e);
-                }}
-              />
-              <label className={EmailValue && 'filled'}>Email ID</label>
-            </div>
-            {errors.EmailID && <p>{errors.EmailID.message} </p>}
+            <InputField
+              errorName={errors.emailID}
+              value={emailValue}
+              type="text"
+              register={EmailRegister}
+              onChangeDefinition={(e) => {
+                EmailRegister.onChange(e);
+                handleChangeEmail(e);
+              }}
+              labelName="Email ID"
+              errorMessage="Email ID is not valid"
+              errorMessageValues={errors.emailID}
+              autofocusEnabled="true"
+            />
 
-            <div className="input-container">
-              <input
-                style={{ borderBottom: errors.Password ? '1px solid red' : '' }}
-                value={PasswordValue}
-                type="password"
-                {...passwordRegister}
-                onChange={(e) => {
-                  passwordRegister.onChange(e);
-                  handleChangePassword(e);
-                }}
-              />
-              <label className={PasswordValue && 'filled'}>Password</label>
-            </div>
-            {/* {errors.Password && <p>Password field is required</p>} */}
-            {errors.Password && touchedFields.Password && (
-              <p>Maximum length of Password is 8</p>
-            )}
+            <InputField
+              errorName={errors.password}
+              value={passwordValue}
+              type="password"
+              register={passwordRegister}
+              onChangeDefinition={(e) => {
+                passwordRegister.onChange(e);
+                handleChangePassword(e);
+              }}
+              labelName="Password"
+              errorMessageValues={errors.password && touchedFields.password}
+              errorMessage="Maximum length of Password is 8"
+            />
 
-            <input type="submit" disabled={!isValid} value="Continue" />
-
-            {/* <button className="submitButton" type="submit" disabled={!isValid}>
-              Continue
-            </button> */}
+            <SharedContinueButton
+              buttonType="submit"
+              type="submit"
+              disabled={!isValid}
+              value="Continue"
+            />
           </form>
 
           <hr className="hr-text" data-content="OR" />
 
-          <button className="signUp" onClick={() => history.push(SIGNUP_ROUTE)}>
-            SIGN UP
-          </button>
+          <SharedContinueButton
+            buttonType="regular-button"
+            function={() => history.push(SIGNUP_ROUTE)}
+            buttonName="SIGN UP"
+          />
         </div>
       </div>
     </div>

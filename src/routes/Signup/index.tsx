@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import './signup.scss';
-import logo from './../../assets/images/bookmarks-app-logo.png';
-import { userInfo } from 'os';
+import InputField from '../../components/shared/InputField';
+import AuthContainer from '../../container/AuthContainer';
+import SharedContinueButton from '../../components/shared/SharedContinueButton';
+import './styles.scss';
+
+type Inputs = {
+  fullName: string;
+  emailID: string;
+  password: string;
+};
 
 const Signup = () => {
   const {
@@ -13,19 +20,13 @@ const Signup = () => {
     mode: 'onChange'
   });
 
-  type Inputs = {
-    'Full Name': string;
-    EmailID: string;
-    Password: string;
-  };
-
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    alert(JSON.stringify(data));
+    console.log(JSON.stringify(data));
   };
 
-  const [FullName, setFullName] = useState('');
-  const [Password, setPassword] = useState('');
-  const [EmailID, setEmail] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailID, setEmail] = useState('');
 
   function handleChangeFullName(e) {
     setFullName(e.target.value);
@@ -39,85 +40,76 @@ const Signup = () => {
     setPassword(e.target.value);
   }
 
-  const fullNameRegister = register('Full Name', { required: true });
-  const EmailRegister = register('EmailID', {
+  const fullNameRegister = register('fullName', { required: true });
+  const EmailRegister = register('emailID', {
     required: true,
     pattern: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
       message: 'Invalid Email Address'
     }
   });
-  const passwordRegister = register('Password', {
+  const passwordRegister = register('password', {
     required: true,
     maxLength: 8
   });
 
   return (
     <div className="signup-wrapper">
-      <div className="image">
-        <img src={logo} alt="Image Not Available"></img>
-      </div>
+      <AuthContainer />
       <div className="fields-container">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="input-container">
-            <input
-              value={FullName}
+        <div className="sign-up-form">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <InputField
+              errorName={errors.fullName}
+              value={fullName}
               type="text"
-              autoFocus
-              style={{
-                borderBottom: errors['Full Name'] ? '1px solid red' : ''
-              }}
-              {...fullNameRegister}
-              onChange={(e) => {
+              register={fullNameRegister}
+              onChangeDefinition={(e) => {
                 fullNameRegister.onChange(e);
                 handleChangeFullName(e);
               }}
+              labelName="Full Name"
+              errorMessageValues={errors.fullName}
+              errorMessage="Full Name Field is required"
+              autofocusEnabled="true"
             />
-            <label className={FullName && 'filled'}>Full Name</label>
-          </div>
-          {errors['Full Name'] && <p>Full Name Field is Required</p>}
 
-          <div className="input-container">
-            <input
-              style={{
-                borderBottom: errors.EmailID ? '1px solid red' : ''
-              }}
-              value={EmailID}
+            <InputField
+              errorName={errors.emailID}
+              value={emailID}
               type="text"
-              {...EmailRegister}
-              onChange={(e) => {
+              register={EmailRegister}
+              onChangeDefinition={(e) => {
                 EmailRegister.onChange(e);
                 handleChangeEmail(e);
               }}
+              labelName="Email ID"
+              errorMessageValues={errors.emailID}
+              errorMessage="Invalid Email Address"
             />
-            <label className={EmailID && 'filled'}>Email ID</label>
-          </div>
-          {errors['User Name'] && <p>Email ID Field is required</p>}
-          {errors.EmailID && <p>{errors.EmailID.message} </p>}
-          <div className="input-container">
-            <input
-              style={{ borderBottom: errors.Password ? '1px solid red' : '' }}
-              value={Password}
+
+            <InputField
+              errorName={errors.password}
+              value={password}
               type="password"
-              {...passwordRegister}
-              onChange={(e) => {
+              register={passwordRegister}
+              onChangeDefinition={(e) => {
                 passwordRegister.onChange(e);
                 handleChangePassword(e);
               }}
+              labelName="Password"
+              errorMessageValues={errors.password && touchedFields.password}
+              errorMessage="Maximum Length of Password is 8"
             />
-            <label className={Password && 'filled'}>Password</label>
-          </div>
-          {errors.Password && <p>Password field is required</p>}
-          {errors.Password && touchedFields.Password && (
-            <p>Maximum length of Password is 8</p>
-          )}
-          <input
-            className="submitButton"
-            type="submit"
-            value="continue"
-            disabled={!isValid}
-          />
-        </form>
+
+            <SharedContinueButton
+              buttonType="submit"
+              type="submit"
+              disabled={!isValid}
+              value="continue"
+            />
+          </form>
+        </div>
       </div>
     </div>
   );
