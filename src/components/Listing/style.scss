@@ -1,26 +1,23 @@
 .sign1 {
-  width: 37px;
+  width: 17px;
   height: 13px;
-  display: inline-block;
-  position: relative;
-  top: 1px;
-  left: -5px;
+  padding-left: 3%;
+  padding-right: 3%;
 }
 .sign2 {
-  width: 30px;
+  width: 15px;
   height: 10px;
-  display: inline-block;
-  position: relative;
-  top: 0px;
-  left: 3px;
+  padding-left: 3%;
+  padding-right: 3%;
 }
 
 .fixed-content {
-  top: 0;
-  bottom: 0;
   position: relative;
   overflow-y: hidden;
   color: #7f7f7f;
-  width: 200px; /* viewport width */
-  //overflow: auto;
+}
+
+.active {
+  padding-left: 5%;
+  position: relative;
 }

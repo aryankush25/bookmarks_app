@@ -1,0 +1,31 @@
+$text-dark: #3c4250;
+$base-color: #6894e6;
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #d4d4da;
+  padding: 16px 24px;
+}
+
+.navbar-nav {
+  list-style: none;
+  display: flex;
+
+  li {
+    a {
+      color: $text-dark;
+      padding: 30px 35px;
+    }
+  }
+}
+
+.navbar-nav {
+  .active {
+    a {
+      color: $base-color;
+      border-bottom: 2px solid;
+      font-weight: bold;
+    }
+  }
+}
