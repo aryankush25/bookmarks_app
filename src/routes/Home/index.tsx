@@ -44,19 +44,20 @@ const Home = () => {
       </header>
       <div className="Sidebar-head">
         <div className="sidebar">
-          <br></br>
-          <br />
+          {/* <br></br>
+          <br /> */}
+
           <div className="N">
             <a className="Project"> All Projects </a>
           </div>
-          <br />
+          {/* <br /> */}
           <div className="N">Root</div>
-          <br />
+          {/* <br /> */}
           <div className="N">Favourites</div>
-          <br />
+          {/* <br /> */}
         </div>
-        <br></br>
-        <br />
+        {/* <br></br> */}
+        {/* <br /> */}
         <div className="sidebar-menu">
           <ul className="sidebar-nav">
             <li className="active1">
