@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SIGNUP_ROUTE } from './../../utils/routesConstants';
-import './Login.scss';
+import './login.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import logo from './../../assets/images/bookmarks-app-logo.png';
 import InputField from '../../components/InputField';
@@ -81,7 +81,7 @@ const Login = () => {
               <input
                 style={{ borderBottom: errors.Password ? '1px solid red' : '' }}
                 value={PasswordValue}
-                type="text"
+                type="password"
                 {...passwordRegister}
                 onChange={(e) => {
                   passwordRegister.onChange(e);

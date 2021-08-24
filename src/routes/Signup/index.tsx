@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import './Signup.scss';
+import './signup.scss';
 import logo from './../../assets/images/bookmarks-app-logo.png';
 import { userInfo } from 'os';
 
@@ -98,7 +98,7 @@ const Signup = () => {
             <input
               style={{ borderBottom: errors.Password ? '1px solid red' : '' }}
               value={Password}
-              type="text"
+              type="password"
               {...passwordRegister}
               onChange={(e) => {
                 passwordRegister.onChange(e);

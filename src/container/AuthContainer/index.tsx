@@ -5,7 +5,7 @@ import './styles.scss';
 
 const AuthContainer = () => {
   type Inputs = {
-    'User Name': string;
+    EmailID: string;
     Password: string;
   };
 
