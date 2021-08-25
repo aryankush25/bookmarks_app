@@ -1,16 +1,22 @@
 .sign1 {
   width: 17px;
-  height: 13px;
+  height: 12px;
   padding-left: 3%;
-  padding-right: 3%;
+  padding-right: 7%;
 }
 .sign2 {
-  width: 15px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   padding-left: 3%;
   padding-right: 3%;
 }
+
+.active .sign2 {
+  transform: rotate(90deg);
+}
 .tree-folder {
-  padding-left: 10%;
-  padding-top: 2%;
+  padding-left: 6%;
+  //overflow: hidden;
+  //white-space: nowrap;
+  //overflow: auto;
 }

@@ -71,7 +71,7 @@ const data = [
                         children: [
                           {
                             id: 'ab32d3fd-f991-4464-979f-839322729ccb',
-                            name: 'Folder 8',
+                            name: 'Folder Folder 8',
                             createdAt: '2021-08-19T22:39:21.367Z',
                             updatedAt: null,
                             deletedAt: null

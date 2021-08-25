@@ -22,14 +22,23 @@ const TreeNode = ({ node }) => {
 
   return (
     <div className="tree-folder">
+      {/* <img className="sign2" src={f4} alt=""></img> */}
       <div onClick={(e) => setChildVisiblity((v) => !v)}>
-        {hasChild && <div className={`${childVisible ? 'active' : ''}`}></div>}
         <br />
-        <img className="sign2" src={f4} alt=""></img>
-        <img className="sign1" src={f1} alt=""></img>
-        {/* <i className={`${sign2}`}> </i> */}
-        {node.name}
-        <br />
+        {hasChild && (
+          <div className={`${childVisible ? 'active' : ''}`}>
+            <img className="sign2" src={f4} alt=""></img>
+            <img className="sign1" src={f1} alt=""></img>
+            {node.name}
+          </div>
+        )}
+        {!hasChild && (
+          <div>
+            <img className="sign2" src={f4} alt=""></img>
+            <img className="sign1" src={f1} alt=""></img>
+            {node.name}
+          </div>
+        )}
       </div>
 
       {hasChild && childVisible && (
