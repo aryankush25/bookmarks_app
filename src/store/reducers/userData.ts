@@ -44,8 +44,25 @@ function userData(state = initialState, action: ActionType) {
     case actionTypes.LOGOUT:
       return initialState;
 
-    case actionTypes.LOGIN:
-      return initialState;
+    case actionTypes.SIGNUP_REQUEST: {
+      return {
+        ...state,
+        loginSpinner: true
+      };
+    }
+    case actionTypes.SIGNUP_SUCCESS: {
+      return {
+        ...state,
+        userData: payload,
+        loginSpinner: false
+      };
+    }
+    case actionTypes.SIGNUP_FAILURE: {
+      return {
+        ...state,
+        loginSpinner: false
+      };
+    }
 
     default:
       return { ...state };

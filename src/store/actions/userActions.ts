@@ -7,10 +7,14 @@ export const requestUserRequest = (email: string, password: string) => {
   };
 };
 
-export const requestUserLogin = (email: string, password: string) => {
+export const requestUserSignup = (
+  name: string,
+  email: string,
+  password: string
+) => {
   return {
-    type: actionTypes.LOGIN,
-    payload: { email, password }
+    type: actionTypes.SIGNUP_REQUEST,
+    payload: { name, email, password }
   };
 };
 

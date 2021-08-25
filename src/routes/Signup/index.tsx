@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useSignupHook } from './hooks';
 import InputField from '../../components/shared/InputField';
 import AuthContainer from '../../container/AuthContainer';
 import SharedContinueButton from '../../components/shared/SharedContinueButton';
@@ -20,25 +21,9 @@ const Signup = () => {
     mode: 'onChange'
   });
 
+  const { signUpHandler } = useSignupHook();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(JSON.stringify(data));
-
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    let raw = JSON.stringify(data);
-
-    let requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch('https://bookmarks-app-server.herokuapp.com/register', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log('error', error));
+    signUpHandler(data);
   };
 
   const [fullName, setFullName] = useState('');
