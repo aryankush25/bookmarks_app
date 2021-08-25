@@ -34,7 +34,6 @@ const TreeNode = ({ node }) => {
         )}
         {!hasChild && (
           <div>
-            <img className="sign2" src={f4} alt=""></img>
             <img className="sign1" src={f1} alt=""></img>
             {node.name}
           </div>

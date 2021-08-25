@@ -43,28 +43,28 @@ const data = [
               },
               {
                 id: '39c814fe-bd07-458c-85bb-55863b1958bb',
-                name: 'Folder 4',
+                name: 'Folder Folder 4',
                 createdAt: '2021-08-19T22:39:03.286Z',
                 updatedAt: null,
                 deletedAt: null,
                 children: [
                   {
                     id: 'e2fb6da7-7d41-477c-8b1e-1102fa91f973',
-                    name: 'Folder 5',
+                    name: 'Folder Folder 5',
                     createdAt: '2021-08-19T22:39:08.037Z',
                     updatedAt: null,
                     deletedAt: null
                   },
                   {
                     id: '572ec075-fefc-4dc0-a5e5-ae72347e1ee8',
-                    name: 'Folder 6',
+                    name: 'Folder Folder 6',
                     createdAt: '2021-08-19T22:39:09.069Z',
                     updatedAt: null,
                     deletedAt: null,
                     children: [
                       {
                         id: 'ed635c76-7a9d-4fa8-a262-08cea1e9527f',
-                        name: 'Folder 7',
+                        name: 'Folder Folder  7',
                         createdAt: '2021-08-19T22:39:14.671Z',
                         updatedAt: null,
                         deletedAt: null,
