@@ -3,8 +3,8 @@ import data from './test';
 import f1 from '../../assets/images/folder@3x.png';
 import f4 from '../../assets/images/right-arrow-black-triangle copy@3x.png';
 import React, { useState } from 'react';
-//import '../Listing';
 import './style.scss';
+
 const Tree = ({ data }) => {
   return (
     <div>
@@ -21,8 +21,7 @@ const TreeNode = ({ node }) => {
   const hasChild = node.children ? true : false;
 
   return (
-    // <div className="fixed-content">
-    <div>
+    <div className="tree-folder">
       <div onClick={(e) => setChildVisiblity((v) => !v)}>
         {hasChild && <div className={`${childVisible ? 'active' : ''}`}></div>}
         <br />
@@ -39,15 +38,10 @@ const TreeNode = ({ node }) => {
         </div>
       )}
     </div>
-    // </div>
   );
 };
 
 const FolderChart = () => {
-  return (
-    // <div>
-    <Tree data={data} />
-    // </div>
-  );
+  return <Tree data={data} />;
 };
 export default FolderChart;

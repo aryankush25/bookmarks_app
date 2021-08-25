@@ -50,8 +50,6 @@ a {
 }
 .Folder-layout {
   color: #7f7f7f;
-  overflow-y: hidden;
-  //padding-left: 10%;
-  //color: #7f7f7f;
-  border: 1px solid #333333;
+  position: relative;
+  overflow-x: scroll;
 }
