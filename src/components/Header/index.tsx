@@ -1,7 +1,9 @@
 import React from 'react';
 
-import './styles.scss';
 import img1 from '../../assets/images/Group 17@3x.png';
+
+import './styles.scss';
+import SharedInput from '../shared/SharedInput';
 
 export default function Home() {
   return (
@@ -9,24 +11,11 @@ export default function Home() {
       <div className="main">
         <section>
           <form action="">
-            <h1 className="addquick">Add Quick Link</h1>
-            <label>URL</label>
-            <input
-              id="disable-select"
-              className="first"
-              type="text"
-              name="url"
-            />
+            <h1 className="add-quick">Add Quick" Link</h1>
 
-            <label>FOLDER</label>
-            <br />
-            <input
-              id="disable-select"
-              className="second"
-              type="text"
-              name="folder"
-            />
-            <br />
+            <SharedInput label="URL" className="url-input" />
+
+            <SharedInput label="Folder" className="folder-input" />
 
             <button className="btn" type="submit">
               Save
