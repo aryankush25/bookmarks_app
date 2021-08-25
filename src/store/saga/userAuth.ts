@@ -12,7 +12,7 @@ import { navigateTo } from '../../utils/history';
 interface FetchUserActionType {
   type: String;
   payload: {
-    username: string;
+    email: string;
     password: string;
   };
 }
@@ -20,15 +20,31 @@ interface FetchUserActionType {
 function* fetchUserAsync(action: FetchUserActionType) {
   try {
     const {
-      payload: { username, password }
+      payload: { email, password }
     } = action;
 
-    console.log({ username, password });
+    console.log({ email, password });
 
     // Do api call here
+    var myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    var raw = JSON.stringify(action.payload);
+
+    var requestOptions: RequestInit = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch('https://bookmarks-app-server.herokuapp.com/login', requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log('error', error));
 
     const data = {
-      username: username,
+      username: email,
       accessToken: 'access-token-from-server',
       refreshToken: 'refresh-token-from-server'
     };
@@ -69,7 +85,20 @@ export function* logout() {
   }
 }
 
+export function* login(action) {
+  try {
+    const {
+      payload: { email, password }
+    } = action;
+
+    console.log(email, password);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default [
   takeLatest(actionTypes.USER_REQUEST, fetchUserAsync),
   takeLatest(actionTypes.LOGOUT, logout)
+  // takeLatest(actionTypes.LOGIN, login)
 ];

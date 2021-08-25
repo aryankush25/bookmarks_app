@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { SIGNUP_ROUTE } from './../../utils/routesConstants';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useLoginHook } from './hooks';
 import InputField from '../../components/shared/InputField';
 import SharedContinueButton from '../../components/shared/SharedContinueButton';
 import AuthContainer from '../../container/AuthContainer';
@@ -23,25 +24,10 @@ const Login = () => {
     mode: 'onChange'
   });
 
+  const { signInRequestHandler } = useLoginHook();
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(JSON.stringify(data));
-
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    var raw = JSON.stringify(data);
-
-    var requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch('https://bookmarks-app-server.herokuapp.com/login', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log('error', error));
+    signInRequestHandler(data);
   };
 
   const [emailValue, setCurrentEmailValue] = useState('');

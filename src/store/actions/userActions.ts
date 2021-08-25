@@ -1,9 +1,16 @@
 import actionTypes from '../actionTypes';
 
-export const requestUserRequest = (username: string, password: string) => {
+export const requestUserRequest = (email: string, password: string) => {
   return {
     type: actionTypes.USER_REQUEST,
-    payload: { username, password }
+    payload: { email, password }
+  };
+};
+
+export const requestUserLogin = (email: string, password: string) => {
+  return {
+    type: actionTypes.LOGIN,
+    payload: { email, password }
   };
 };
 

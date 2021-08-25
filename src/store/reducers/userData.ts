@@ -44,6 +44,9 @@ function userData(state = initialState, action: ActionType) {
     case actionTypes.LOGOUT:
       return initialState;
 
+    case actionTypes.LOGIN:
+      return initialState;
+
     default:
       return { ...state };
   }
