@@ -10,13 +10,12 @@ a {
 .Sidebar-head {
   width: 15%;
   padding-top: 2%;
-
   padding-bottom: 2%;
-  //background-color: rgb(157, 166, 194);
 }
 .sidebar {
   border-bottom: 1px solid #d4d4da;
   color: #7f7f7f;
+  white-space: nowrap;
 
   .side-tab {
     padding: 10px 25px 25px;
@@ -33,10 +32,10 @@ a {
 .sidebar-menu {
   display: flex;
   justify-content: space-between;
-  //background-color: khaki;
-  padding: 20px 28px;
+  padding: 20px 20px 20px 20px;
   a {
     color: #7f7f7f;
+    display: inline;
   }
 }
 .active1 {
