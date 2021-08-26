@@ -11,13 +11,10 @@ $base-color: #6894e6;
 .navbar-menu {
   list-style: none;
   display: flex;
-
-  // li {
   a {
     color: $text-dark;
     padding: 25px 35px;
   }
-  // }
 }
 
 .navbar-menu {

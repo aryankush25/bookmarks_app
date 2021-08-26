@@ -20,17 +20,6 @@ function Navigationbar() {
         <div>
           <a href="/#">Text</a>
         </div>
-        {/* <ul className="navbar-nav">
-          <li className="active">
-            <a href="/#">Links</a>
-          </li>
-          <li>
-            <a href="/#">Images</a>
-          </li>
-          <li>
-            <a href="/#">Text</a>
-          </li>
-        </ul> */}
       </div>
 
       <div className=".navbar-right">
