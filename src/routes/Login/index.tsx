@@ -53,14 +53,12 @@ const Login = () => {
   });
 
   return (
-    <div className="login-wrapper">
-      <AuthContainer />
-
+    <AuthContainer>
       <div className="fields-container">
         <div className="auth">
-          <h1 className="main-welcome">Welcome back!</h1>
-          <h3 className="subText">Log in to your account.</h3>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <h1 className="main-heading">Welcome back!</h1>
+          <h3 className="sub-text">Log in to your account.</h3>
+          <form onSubmit={handleSubmit(onSubmit)} className=".user-form">
             <InputField
               errorName={errors.email}
               value={emailValue}
@@ -98,16 +96,16 @@ const Login = () => {
             />
           </form>
 
-          <hr className="hr-text" data-content="OR" />
+          <div className="separator">OR</div>
 
           <SharedContinueButton
             buttonType="regular-button"
-            function={() => history.push(SIGNUP_ROUTE)}
+            buttonClicked={() => history.push(SIGNUP_ROUTE)}
             buttonName="SIGN UP"
           />
         </div>
       </div>
-    </div>
+    </AuthContainer>
   );
 };
 

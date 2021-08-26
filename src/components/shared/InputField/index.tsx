@@ -10,9 +10,14 @@ const InputField = (props) => (
       {...props.register}
       onChange={props.onChangeDefinition}
       autofocus={props.autofocusEnabled ? 'true' : 'false'}
+      className="form-input-fields"
     />
-    <label className={props.value && 'filled'}>{props.labelName}</label>
-    {props.errorMessageValues && <p>{props.errorMessage}</p>}
+    <label className={`form-label ${props.value && 'filled'}`}>
+      {props.labelName}
+    </label>
+    {props.errorMessageValues && (
+      <p className="error-message">{props.errorMessage}</p>
+    )}
   </div>
 );
 

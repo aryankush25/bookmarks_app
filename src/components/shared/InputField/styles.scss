@@ -22,17 +22,17 @@
 .input-container .filled {
   transform: translate(0, -7px) scale(0.8);
 }
-p {
+.error-message {
   color: #dd2a3b;
   font-size: 9px;
   margin-top: -10px;
 }
 
-p::before {
+.error-message::before {
   display: inline;
 }
 
-input {
+.form-input-fields {
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -47,9 +47,10 @@ input {
   border-radius: 0;
   background: transparent;
   outline: none;
+  padding-left: 0;
 }
 
-label {
+.form-label {
   line-height: 2;
   text-align: left;
   display: block;
@@ -61,12 +62,6 @@ label {
   font-family: Helvetica;
 }
 
-input:disabled {
+.form-input-fields:disabled {
   opacity: 0.4;
-}
-
-.si button[type='submit'],
-input[type='button'],
-input[type='submit'] {
-  -webkit-appearance: none;
 }

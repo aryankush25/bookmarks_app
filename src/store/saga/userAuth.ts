@@ -49,7 +49,7 @@ function* fetchUserAsync(action: FetchUserActionType) {
 
     fetch('https://bookmarks-app-server.herokuapp.com/login', requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(JSON.parse(result)))
+      .then((result) => console.log(JSON.parse(result).token))
       .catch((error) => console.log('error', error));
 
     const data = {

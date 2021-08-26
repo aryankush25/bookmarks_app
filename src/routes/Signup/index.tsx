@@ -56,64 +56,72 @@ const Signup = () => {
   });
 
   return (
-    <div className="signup-wrapper">
-      <AuthContainer />
+    <AuthContainer>
       <div className="fields-container">
         <div className="sign-up-form">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <InputField
-              errorName={errors.name}
-              value={fullName}
-              type="text"
-              register={fullNameRegister}
-              onChangeDefinition={(e) => {
-                fullNameRegister.onChange(e);
-                handleChangeFullName(e);
-              }}
-              labelName="Full Name"
-              errorMessageValues={errors.name}
-              errorMessage="Full Name Field is required"
-              autofocusEnabled="true"
-            />
+          <div>
+            <h1 className="main-heading">
+              Never lose track of a bookmark again.
+            </h1>
+            <h3 className="sub-text">
+              Simple, fast and powerful bookmark management software for
+              businesses and teams to stay organized.
+            </h3>
+            <form onSubmit={handleSubmit(onSubmit)} className=".user-form">
+              <InputField
+                errorName={errors.name}
+                value={fullName}
+                type="text"
+                register={fullNameRegister}
+                onChangeDefinition={(e) => {
+                  fullNameRegister.onChange(e);
+                  handleChangeFullName(e);
+                }}
+                labelName="Full Name"
+                errorMessageValues={errors.name}
+                errorMessage="Full Name Field is required"
+                autofocusEnabled="true"
+              />
 
-            <InputField
-              errorName={errors.email}
-              value={emailID}
-              type="text"
-              register={EmailRegister}
-              onChangeDefinition={(e) => {
-                EmailRegister.onChange(e);
-                handleChangeEmail(e);
-              }}
-              labelName="Email ID"
-              errorMessageValues={errors.email}
-              errorMessage="Invalid Email Address"
-            />
+              <InputField
+                errorName={errors.email}
+                value={emailID}
+                type="text"
+                register={EmailRegister}
+                onChangeDefinition={(e) => {
+                  EmailRegister.onChange(e);
+                  handleChangeEmail(e);
+                }}
+                labelName="Email ID"
+                errorMessageValues={errors.email}
+                errorMessage="Invalid Email Address"
+              />
 
-            <InputField
-              errorName={errors.password}
-              value={password}
-              type="password"
-              register={passwordRegister}
-              onChangeDefinition={(e) => {
-                passwordRegister.onChange(e);
-                handleChangePassword(e);
-              }}
-              labelName="Password"
-              errorMessageValues={errors.password && touchedFields.password}
-              errorMessage="Maximum Length of Password is 8"
-            />
+              <InputField
+                errorName={errors.password}
+                value={password}
+                type="password"
+                register={passwordRegister}
+                onChangeDefinition={(e) => {
+                  passwordRegister.onChange(e);
+                  handleChangePassword(e);
+                }}
+                labelName="Password"
+                errorMessageValues={errors.password && touchedFields.password}
+                errorMessage="Maximum Length of Password is 8"
+              />
 
-            <SharedContinueButton
-              buttonType="submit"
-              type="submit"
-              disabled={!isValid}
-              value="continue"
-            />
-          </form>
+              <SharedContinueButton
+                buttonType="submit"
+                type="submit"
+                disabled={!isValid}
+                value="continue"
+              />
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </AuthContainer>
   );
 };
 
