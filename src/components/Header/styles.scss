@@ -22,13 +22,13 @@
 
   label {
     padding: 12px 12px 12px 0;
-    padding-left: 30px;
+    padding-left: 40px;
     margin-right: auto;
     color: white;
     display: inline-block;
   }
   .add-quick {
-    padding-left: 30px;
+    padding-left: 40px;
   }
   .img-container {
     height: 100%;
@@ -42,14 +42,16 @@
     background-color: white;
     color: black;
     font-size: 24px;
-    border: 2px;
+    border: 1px;
     float: right;
-    border-radius: 10px;
-    padding: 10 px 10 px;
-
+    border-radius: 5px;
     margin-top: -5%;
     margin-right: 8%;
-    font-style: poppins;
+    font-family: poppins;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 
   .right {

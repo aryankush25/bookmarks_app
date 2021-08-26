@@ -17,6 +17,8 @@ const SharedInput = (props) => {
         className={`shared-input ${props.className}`}
         type="text"
         name="url"
+        value={props.value}
+        onChange={props.setFunction}
       />
     </div>
   );
