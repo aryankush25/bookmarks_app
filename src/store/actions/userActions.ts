@@ -7,6 +7,13 @@ export const requestUserRequest = (username: string, password: string) => {
   };
 };
 
+export const requestCreateBookmark = (url: string, folder: string) => {
+  return {
+    type: actionTypes.CREATE_BOOKMARK_REQUEST,
+    payload: { url, folder }
+  };
+};
+
 export const requestUserSuccess = (
   username: string,
   accessToken: string,

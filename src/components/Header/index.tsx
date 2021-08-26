@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { requestCreateBookmark } from '../../store/actions/userActions';
 
 import img1 from '../../assets/images/Group 17@3x.png';
 
@@ -16,11 +18,11 @@ export default function Home() {
   function handleChangeFolder(e) {
     setFolder(e.target.value);
   }
+  const dispatch = useDispatch();
+  function handleSubmit(event) {
+    event.preventDefault();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // alert(`URL is ${url} and Folder is ${folder}`);
-    console.log('Url: ', { url }, 'Folder', { folder });
+    dispatch(requestCreateBookmark(url, folder));
     setUrl('');
     setFolder('');
   }

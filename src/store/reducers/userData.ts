@@ -41,6 +41,28 @@ function userData(state = initialState, action: ActionType) {
         loginSpinner: false
       };
     }
+    case actionTypes.CREATE_BOOKMARK_REQUEST: {
+      return {
+        ...state,
+        userData: payload,
+        loginSpinner: true
+      };
+    }
+
+    case actionTypes.CREATE_BOOKMARK_SUCCESS: {
+      return {
+        ...state,
+        loginSpinner: false
+      };
+    }
+
+    case actionTypes.CREATE_BOOKMARK_FAILURE: {
+      return {
+        ...state,
+        loginSpinner: false
+      };
+    }
+
     case actionTypes.LOGOUT:
       return initialState;
 

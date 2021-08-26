@@ -17,6 +17,13 @@ interface FetchUserActionType {
   };
 }
 
+interface CreateBookmarkAction {
+  type: String;
+  payload: {
+    url: string;
+    folder: string;
+  };
+}
 function* fetchUserAsync(action: FetchUserActionType) {
   try {
     const {
@@ -51,6 +58,28 @@ function* fetchUserAsync(action: FetchUserActionType) {
     yield put(requestUserFailure());
   }
 }
+export function* createbookmark(action: CreateBookmarkAction) {
+  try {
+    const {
+      payload: { url, folder }
+    } = action;
+
+    console.log({ url, folder });
+    fetch('https://bookmarks-app-server.herokuapp.com/bookmark', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
+      },
+      body: JSON.stringify(action.payload)
+    }).then(() => {
+      console.log('posted');
+    });
+  } catch (error) {
+    console.log(error);
+    yield put(requestUserFailure());
+  }
+}
 
 export function* logout() {
   try {
@@ -71,5 +100,6 @@ export function* logout() {
 
 export default [
   takeLatest(actionTypes.USER_REQUEST, fetchUserAsync),
-  takeLatest(actionTypes.LOGOUT, logout)
+  takeLatest(actionTypes.LOGOUT, logout),
+  takeLatest(actionTypes.CREATE_BOOKMARK_REQUEST, createbookmark)
 ];
