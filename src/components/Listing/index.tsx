@@ -18,7 +18,7 @@ const Tree = ({ data }) => {
 const TreeNode = ({ node }) => {
   const [childVisible, setChildVisiblity] = useState(false);
 
-  const hasChild = node.children ? true : false;
+  const hasChild = !!node.children;
 
   return (
     <div className="tree-folder">
