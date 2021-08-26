@@ -11,11 +11,6 @@ body {
   font-family: 'Poppins';
   flex-flow: row wrap;
 }
-.image-container {
-  margin: 50px;
-  padding-left: 50px;
-  padding-top: 80px;
-}
 .main-welcome {
   font-size: 42px;
   margin: 0px 0px 12px;
@@ -55,49 +50,6 @@ form {
   background: #0e101c;
   max-width: 400px;
   margin: 0 auto;
-}
-
-p {
-  color: #dd2a3b;
-  font-size: 9px;
-  margin-top: -10px;
-}
-
-p::before {
-  display: inline;
-}
-
-input {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  border: none;
-  border-bottom: solid #6191e3 1px;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  border-radius: 0;
-  background: transparent;
-  outline: none;
-}
-
-input:focus {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-
-input:f label {
-  line-height: 2;
-  text-align: left;
-  display: block;
-  margin-bottom: 13px;
-  margin-top: 20px;
-  color: rgb(0, 0, 0);
-  font-size: 15px;
-  font-weight: bolder;
-  font-family: Helvetica;
 }
 
 .header-login {
