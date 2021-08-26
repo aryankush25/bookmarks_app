@@ -5,26 +5,26 @@ $base-color: #6894e6;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #d4d4da;
-  padding: 10px 24px;
+  padding: 20px 24px;
 }
 
-.navbar-nav {
+.navbar-menu {
   list-style: none;
   display: flex;
 
-  li {
-    a {
-      color: $text-dark;
-      padding: 25px 35px;
-    }
+  // li {
+  a {
+    color: $text-dark;
+    padding: 25px 35px;
   }
+  // }
 }
 
-.navbar-nav {
+.navbar-menu {
   .active {
     a {
       color: $base-color;
-      border-bottom: 2px solid;
+      border-bottom: 3px solid;
       font-weight: bold;
     }
   }

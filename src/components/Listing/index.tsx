@@ -1,7 +1,7 @@
 //import React from 'react';
 import data from './test';
-import f1 from '../../assets/images/folder@3x.png';
-import f4 from '../../assets/images/right-arrow-black-triangle copy@3x.png';
+import folder from '../../assets/images/folder@3x.png';
+import dropdown from '../../assets/images/right-arrow-black-triangle copy@3x.png';
 import React, { useState } from 'react';
 import './style.scss';
 
@@ -22,19 +22,18 @@ const TreeNode = ({ node }) => {
 
   return (
     <div className="tree-folder">
-      {/* <img className="sign2" src={f4} alt=""></img> */}
       <div onClick={(e) => setChildVisiblity((v) => !v)}>
         <br />
         {hasChild && (
           <div className={`${childVisible ? 'active' : ''}`}>
-            <img className="sign2" src={f4} alt=""></img>
-            <img className="sign1" src={f1} alt=""></img>
+            <img className="dropdown-icon" src={dropdown} alt=""></img>
+            <img className="folder-icon" src={folder} alt=""></img>
             {node.name}
           </div>
         )}
         {!hasChild && (
           <div>
-            <img className="sign1" src={f1} alt=""></img>
+            <img className="folder-icon" src={folder} alt=""></img>
             {node.name}
           </div>
         )}

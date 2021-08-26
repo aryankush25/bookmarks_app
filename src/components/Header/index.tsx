@@ -1,8 +1,8 @@
 import React from 'react';
-import b1 from '../../assets/images/ic_Dropdown@3x.png';
-import b2 from '../../assets/images/Shivam Chaudhary@3x.png';
-import b3 from '../../assets/images/Profile@3x.png';
-import b4 from '../../assets/images/Group 2@3x.png';
+import dropicon from '../../assets/images/ic_Dropdown@3x.png';
+import name from '../../assets/images/Shivam Chaudhary@3x.png';
+import profile from '../../assets/images/Profile@3x.png';
+import notification from '../../assets/images/Group 2@3x.png';
 import logoo from '../../assets/images/LOGO@3x.png';
 import './style.scss';
 
@@ -11,7 +11,16 @@ function Navigationbar() {
     <div className="navbar">
       <img className="sign14" src={logoo} alt=""></img>
       <div className="navbar-menu">
-        <ul className="navbar-nav">
+        <div className="active">
+          <a href="/#">Links</a>
+        </div>
+        <div>
+          <a href="/#">Images</a>
+        </div>
+        <div>
+          <a href="/#">Text</a>
+        </div>
+        {/* <ul className="navbar-nav">
           <li className="active">
             <a href="/#">Links</a>
           </li>
@@ -21,14 +30,14 @@ function Navigationbar() {
           <li>
             <a href="/#">Text</a>
           </li>
-        </ul>
+        </ul> */}
       </div>
 
       <div className=".navbar-right">
-        <img className="sign11" src={b4} alt=""></img>
-        <img className="sign12" src={b3} alt=""></img>
-        <img className="sign13" src={b2} alt=""></img>
-        <img className="sign" src={b1} alt=""></img>
+        <img className="notification-icon" src={notification} alt=""></img>
+        <img className="profile-icon" src={profile} alt=""></img>
+        <img className="name-icon" src={name} alt=""></img>
+        <img className="drop-icon" src={dropicon} alt=""></img>
       </div>
     </div>
   );
