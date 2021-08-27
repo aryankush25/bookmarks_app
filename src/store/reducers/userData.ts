@@ -7,13 +7,12 @@ export interface ActionType {
   payload: any;
 }
 
-const { username, accessToken, refreshToken } = getLocalStorageTokens();
+const { email, accessToken } = getLocalStorageTokens();
 
 const initialState: UserDataReducerTypes = {
   userData: {
-    username,
-    accessToken,
-    refreshToken
+    email,
+    accessToken
   },
   loginSpinner: false
 };

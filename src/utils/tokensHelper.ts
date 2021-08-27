@@ -3,12 +3,11 @@ import { isNilOrEmpty, isPresent } from './helper';
 import { encryptWithAES, decryptWithAES } from './cryptoJsHelpers';
 
 export const MY_WEB_APP_TOKENS = 'my-web-app-tokens'; // Change name according to your project
-const TOKENS = ['username', 'accessToken', 'refreshToken'];
+const TOKENS = ['email', 'accessToken'];
 
 export interface LocalStorageTokensProps {
-  username: string;
+  email: string;
   accessToken: string;
-  refreshToken: string;
 }
 
 export const setLocalStorageTokens = (tokens: LocalStorageTokensProps) => {
@@ -44,9 +43,8 @@ export const getLocalStorageTokens = () => {
   }
 
   const returnTokens: LocalStorageTokensProps = {
-    username: '',
-    accessToken: '',
-    refreshToken: ''
+    email: '',
+    accessToken: ''
   };
 
   TOKENS.forEach((token) => {

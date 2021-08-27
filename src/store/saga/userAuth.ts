@@ -1,13 +1,20 @@
 import { takeLatest, delay, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actionTypes from '../actionTypes';
-import { requestUserSuccess, requestUserFailure } from '../actions/userActions';
+import {
+  requestUserSuccess,
+  requestUserFailure,
+  requestUserSignupSuccess,
+  requestUserSignupFailure
+} from '../actions/userActions';
 import {
   setLocalStorageTokens,
   clearLocalStorage
 } from '../../utils/tokensHelper';
 import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/routesConstants';
 import { navigateTo } from '../../utils/history';
+import { result } from 'lodash';
+import * as ApiService from '../../services/apiService';
 
 interface FetchUserActionType {
   type: String;
@@ -26,50 +33,29 @@ interface SingupUserAction {
   };
 }
 
+const fetchuserloginData = (raw) => {
+  const APIObj = {
+    endPoint: '/login',
+    authenticationRequired: false,
+    method: 'POST',
+    body: raw
+  };
+
+  return ApiService.callApi(APIObj);
+};
 function* fetchUserAsync(action: FetchUserActionType) {
   try {
-    const {
-      payload: { email, password }
-    } = action;
-
-    console.log({ email, password });
-
-    // Do api call here
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
     var raw = JSON.stringify(action.payload);
-
-    var requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch('https://bookmarks-app-server.herokuapp.com/login', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(JSON.parse(result).token))
-      .catch((error) => console.log('error', error));
-
-    const data = {
-      username: email,
-      accessToken: 'access-token-from-server',
-      refreshToken: 'refresh-token-from-server'
-    };
-
+    // console.log('raw - email', email);
+    // console.log('raw', action.payload);
+    const result1 = yield fetchuserloginData(raw);
     setLocalStorageTokens({
-      username: data.username,
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken
+      email: result1.email,
+      accessToken: result1.token
     });
+    yield put(requestUserSuccess(result1.email, result1.accessToken));
 
     navigateTo(HOME_ROUTE);
-
-    yield put(
-      requestUserSuccess(data.username, data.accessToken, data.refreshToken)
-    );
-
     toast.success('Logged In Successfully');
   } catch (error) {
     console.log(error);
@@ -77,35 +63,41 @@ function* fetchUserAsync(action: FetchUserActionType) {
   }
 }
 
-export function* signup(action: SingupUserAction) {
+const fetchusersignupData = (raw) => {
+  const APIObj = {
+    endPoint: '/register',
+    authenticationRequired: false,
+    method: 'POST',
+    body: raw
+  };
+
+  return ApiService.callApi(APIObj);
+};
+function* signup(action: SingupUserAction) {
   try {
     const {
       payload: { name, email, password }
     } = action;
 
     console.log({ name, email, password });
+    var raw = JSON.stringify(action.payload);
 
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
+    const result1 = yield fetchusersignupData(raw);
 
-    let raw = JSON.stringify(action.payload);
+    setLocalStorageTokens({
+      email: result1.email,
+      accessToken: result1.token
+    });
+    yield put(
+      requestUserSignupSuccess(result1.name, result1.email, result1.password)
+    );
 
-    let requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    fetch('https://bookmarks-app-server.herokuapp.com/register', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log('error', error));
-
-    toast.success('Signed Up Successfully');
+    navigateTo(HOME_ROUTE);
+    // console.log('info->', result1);
+    toast.success('Signed In Successfully');
   } catch (error) {
     console.log(error);
-    yield put(requestUserFailure());
+    yield put(requestUserSignupFailure());
   }
 }
 
