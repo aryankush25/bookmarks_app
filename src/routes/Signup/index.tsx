@@ -74,7 +74,6 @@ const Signup = () => {
               Simple, fast and powerful bookmark management software for
               businesses and teams to stay organized.
             </h3>
-            <Loader enabled={spinner} />
             <form onSubmit={handleSubmit(onSubmit)} className=".user-form">
               <InputField
                 errorName={errors.name}
@@ -125,6 +124,7 @@ const Signup = () => {
                 disabled={!isValid}
                 value="Continue"
               />
+              <Loader enabled={spinner} />
             </form>
           </div>
         </div>
