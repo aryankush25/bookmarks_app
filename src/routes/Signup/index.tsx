@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useSignupHook } from './hooks';
+import { useSelector } from 'react-redux';
+import StoreState from '../../store/utils/StoreTypes';
 import InputField from '../../components/shared/InputField';
 import AuthContainer from '../../container/AuthContainer';
 import SharedContinueButton from '../../components/shared/SharedContinueButton';
+import Loader from './../../components/shared/Loader';
 import './styles.scss';
 
 type Inputs = {
@@ -16,7 +19,7 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, touchedFields }
+    formState: { errors, isValid, touchedFields, dirtyFields }
   } = useForm<Inputs>({
     mode: 'onChange'
   });
@@ -25,6 +28,10 @@ const Signup = () => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     signUpHandler(data);
   };
+
+  const spinner = useSelector(
+    (state: StoreState) => state.userData.loginSpinner
+  );
 
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
@@ -52,7 +59,7 @@ const Signup = () => {
   });
   const passwordRegister = register('password', {
     required: true,
-    maxLength: 8
+    minLength: 8
   });
 
   return (
@@ -67,6 +74,7 @@ const Signup = () => {
               Simple, fast and powerful bookmark management software for
               businesses and teams to stay organized.
             </h3>
+            <Loader enabled={spinner} />
             <form onSubmit={handleSubmit(onSubmit)} className=".user-form">
               <InputField
                 errorName={errors.name}
@@ -78,7 +86,7 @@ const Signup = () => {
                   handleChangeFullName(e);
                 }}
                 labelName="Full Name"
-                errorMessageValues={errors.name}
+                errorMessageValues={!dirtyFields.name || errors.name}
                 errorMessage="Full Name Field is required"
                 autofocusEnabled="true"
               />
@@ -107,15 +115,15 @@ const Signup = () => {
                   handleChangePassword(e);
                 }}
                 labelName="Password"
-                errorMessageValues={errors.password && touchedFields.password}
-                errorMessage="Maximum Length of Password is 8"
+                errorMessageValues={errors.password}
+                errorMessage="Minimum Length of Password is 8"
               />
 
               <SharedContinueButton
                 buttonType="submit"
                 type="submit"
                 disabled={!isValid}
-                value="continue"
+                value="Continue"
               />
             </form>
           </div>

@@ -1,4 +1,4 @@
-import { takeLatest, delay, put } from 'redux-saga/effects';
+import { takeLatest, delay, put, call, select } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actionTypes from '../actionTypes';
 import { requestUserSuccess, requestUserFailure } from '../actions/userActions';
@@ -8,6 +8,7 @@ import {
 } from '../../utils/tokensHelper';
 import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/routesConstants';
 import { navigateTo } from '../../utils/history';
+import { act } from '@testing-library/react';
 
 interface FetchUserActionType {
   type: String;
@@ -31,12 +32,12 @@ function* fetchUserAsync(action: FetchUserActionType) {
     const {
       payload: { email, password }
     } = action;
-
     console.log({ email, password });
 
     // Do api call here
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
+    let success: boolean = false;
 
     var raw = JSON.stringify(action.payload);
 
@@ -47,30 +48,40 @@ function* fetchUserAsync(action: FetchUserActionType) {
       redirect: 'follow'
     };
 
-    fetch('https://bookmarks-app-server.herokuapp.com/login', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(JSON.parse(result).token))
-      .catch((error) => console.log('error', error));
-
-    const data = {
-      username: email,
-      accessToken: 'access-token-from-server',
-      refreshToken: 'refresh-token-from-server'
-    };
-
-    setLocalStorageTokens({
-      username: data.username,
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken
-    });
-
-    navigateTo(HOME_ROUTE);
-
-    yield put(
-      requestUserSuccess(data.username, data.accessToken, data.refreshToken)
+    const response = yield fetch(
+      'https://bookmarks-app-server.herokuapp.com/login',
+      requestOptions
     );
 
     toast.success('Logged In Successfully');
+    console.log(response);
+    navigateTo(HOME_ROUTE);
+
+    yield put(
+      requestUserSuccess(response.name, response.token, response.token)
+    );
+
+    // setLocalStorageTokens({
+    //   username: response.name,
+    //   accessToken: data.accessToken,
+    //   refreshToken: data.refreshToken
+    // });
+
+    // const data = {
+    //   username: email,
+    //   accessToken: 'access-token-from-server',
+    //   refreshToken: 'refresh-token-from-server'
+    // };
+
+    // setLocalStorageTokens({
+    //   username: data.username,
+    //   accessToken: data.accessToken,
+    //   refreshToken: data.refreshToken
+    // });
+
+    // yield put(
+    //   requestUserSuccess(data.username, data.accessToken, data.refreshToken)
+    // );
   } catch (error) {
     console.log(error);
     yield put(requestUserFailure());
@@ -97,12 +108,20 @@ export function* signup(action: SingupUserAction) {
       redirect: 'follow'
     };
 
-    fetch('https://bookmarks-app-server.herokuapp.com/register', requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log('error', error));
+    // fetch('https://bookmarks-app-server.herokuapp.com/register', requestOptions)
+    //   .then((response) => response.text())
+    //   .then((result) => console.log(result))
+    //   .catch((error) => console.log('error', error));
+
+    const response = yield fetch(
+      'https://bookmarks-app-server.herokuapp.com/register',
+      requestOptions
+    );
 
     toast.success('Signed Up Successfully');
+    yield put(
+      requestUserSuccess(response.name, response.token, response.token)
+    );
   } catch (error) {
     console.log(error);
     yield put(requestUserFailure());
