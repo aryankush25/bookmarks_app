@@ -4,15 +4,12 @@ import { requestUserRequest } from '../../store/actions/userActions';
 
 export const useLoginHook = () => {
   const dispatch = useDispatch();
+  const userName = 'React';
+  const password = 'react';
 
-  const signInRequestHandler = useCallback(
-    (params) => {
-      const email = params.email;
-      const password = params.password;
-      dispatch(requestUserRequest(email, password));
-    },
-    [dispatch]
-  );
+  const signInRequestHandler = useCallback(() => {
+    dispatch(requestUserRequest(userName, password));
+  }, [dispatch]);
 
   return { signInRequestHandler };
 };
