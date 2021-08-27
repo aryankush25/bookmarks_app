@@ -65,18 +65,21 @@ export function* createbookmark(action: CreateBookmarkAction) {
     } = action;
 
     console.log({ url, folder });
-    fetch('https://bookmarks-app-server.herokuapp.com/bookmark', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
-      },
-      body: JSON.stringify(action.payload)
-    }).then(() => {
-      console.log('posted');
-    });
+    const response = yield fetch(
+      'https://bookmarks-app-server.herokuapp.com/bookmark',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
+        },
+        body: JSON.stringify(action.payload)
+      }
+    );
+    yield put(requestUserSuccess('a', 'b', 'c'));
   } catch (error) {
     console.log(error);
+
     yield put(requestUserFailure());
   }
 }

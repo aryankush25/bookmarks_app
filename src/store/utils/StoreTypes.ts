@@ -13,6 +13,6 @@ export interface UserDataReducerTypes {
 
 export default interface StoreState {
   userData: UserDataReducerTypes;
-
+  // loginSpinner: boolean;
   router: RouterState;
 }
