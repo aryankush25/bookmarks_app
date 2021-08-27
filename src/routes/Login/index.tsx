@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { SIGNUP_ROUTE } from './../../utils/routesConstants';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useLoginHook } from './hooks';
+import StoreState from '../../store/utils/StoreTypes';
 import InputField from '../../components/shared/InputField';
 import SharedContinueButton from '../../components/shared/SharedContinueButton';
 import AuthContainer from '../../container/AuthContainer';
+import Loader from './../../components/shared/Loader';
 import './styles.scss';
 
 type Inputs = {
@@ -25,6 +28,10 @@ const Login = () => {
   });
 
   const { signInRequestHandler } = useLoginHook();
+
+  const spinner = useSelector(
+    (state: StoreState) => state.userData.loginSpinner
+  );
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     signInRequestHandler(data);
@@ -49,7 +56,7 @@ const Login = () => {
 
   const passwordRegister = register('password', {
     required: true,
-    maxLength: 8
+    minLength: 8
   });
 
   return (
@@ -85,15 +92,19 @@ const Login = () => {
               }}
               labelName="Password"
               errorMessageValues={errors.password && touchedFields.password}
-              errorMessage="Maximum length of Password is 8"
+              errorMessage="Minimum length of Password is 8"
             />
 
-            <SharedContinueButton
-              buttonType="submit"
-              type="submit"
-              disabled={!isValid}
-              value="Continue"
-            />
+            <span>
+              <SharedContinueButton
+                buttonType="submit"
+                type="submit"
+                disabled={!isValid}
+                value="Continue"
+                isLoading={spinner}
+              />
+              <Loader enabled={spinner} />
+            </span>
           </form>
 
           <div className="separator">OR</div>
@@ -101,7 +112,8 @@ const Login = () => {
           <SharedContinueButton
             buttonType="regular-button"
             buttonClicked={() => history.push(SIGNUP_ROUTE)}
-            buttonName="SIGN UP"
+            buttonName="Sign Up"
+            isLoading={spinner}
           />
         </div>
       </div>

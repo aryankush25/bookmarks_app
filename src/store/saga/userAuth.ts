@@ -13,9 +13,9 @@ import {
 } from '../../utils/tokensHelper';
 import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/routesConstants';
 import { navigateTo } from '../../utils/history';
-import { result } from 'lodash';
+//import { result } from 'lodash';
 import * as ApiService from '../../services/apiService';
-
+//import { act } from '@testing-library/react';
 interface FetchUserActionType {
   type: String;
   payload: {
@@ -46,8 +46,6 @@ const fetchuserloginData = (raw) => {
 function* fetchUserAsync(action: FetchUserActionType) {
   try {
     var raw = JSON.stringify(action.payload);
-    // console.log('raw - email', email);
-    // console.log('raw', action.payload);
     const result1 = yield fetchuserloginData(raw);
     setLocalStorageTokens({
       email: result1.email,
@@ -55,8 +53,10 @@ function* fetchUserAsync(action: FetchUserActionType) {
     });
     yield put(requestUserSuccess(result1.email, result1.accessToken));
 
-    navigateTo(HOME_ROUTE);
     toast.success('Logged In Successfully');
+    navigateTo(HOME_ROUTE);
+    // <<<<<<< HEAD
+    // >>>>>>> 0944b760328d70f144bcdcfe5fae12f5d48752d2
   } catch (error) {
     console.log(error);
     yield put(requestUserFailure());
@@ -75,11 +75,6 @@ const fetchusersignupData = (raw) => {
 };
 function* signup(action: SingupUserAction) {
   try {
-    const {
-      payload: { name, email, password }
-    } = action;
-
-    console.log({ name, email, password });
     var raw = JSON.stringify(action.payload);
 
     const result1 = yield fetchusersignupData(raw);
@@ -93,7 +88,6 @@ function* signup(action: SingupUserAction) {
     );
 
     navigateTo(HOME_ROUTE);
-    // console.log('info->', result1);
     toast.success('Signed In Successfully');
   } catch (error) {
     console.log(error);
