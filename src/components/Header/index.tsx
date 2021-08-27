@@ -59,7 +59,7 @@ export default function Home() {
                 style={{ background: 'grey' }}
                 className="btn"
                 type="submit">
-                Saving
+                <i className="fa fa-refresh fa-spin"></i> Saving
               </button>
             )}
 
