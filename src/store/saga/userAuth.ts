@@ -13,9 +13,9 @@ import {
 } from '../../utils/tokensHelper';
 import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/routesConstants';
 import { navigateTo } from '../../utils/history';
-//import { result } from 'lodash';
+import { result } from 'lodash';
 import * as ApiService from '../../services/apiService';
-//import { act } from '@testing-library/react';
+import { act } from '@testing-library/react';
 interface FetchUserActionType {
   type: String;
   payload: {
