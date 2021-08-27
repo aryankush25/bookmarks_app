@@ -74,6 +74,7 @@ const Signup = () => {
               Simple, fast and powerful bookmark management software for
               businesses and teams to stay organized.
             </h3>
+
             <form onSubmit={handleSubmit(onSubmit)} className=".user-form">
               <InputField
                 errorName={errors.name}
@@ -89,7 +90,6 @@ const Signup = () => {
                 errorMessage="Full Name Field is required"
                 autofocusEnabled="true"
               />
-
               <InputField
                 errorName={errors.email}
                 value={emailID}

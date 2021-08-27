@@ -1,15 +1,21 @@
-import { takeLatest, delay, put, call, select } from 'redux-saga/effects';
+import { takeLatest, delay, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actionTypes from '../actionTypes';
-import { requestUserSuccess, requestUserFailure } from '../actions/userActions';
+import {
+  requestUserSuccess,
+  requestUserFailure,
+  requestUserSignupSuccess,
+  requestUserSignupFailure
+} from '../actions/userActions';
 import {
   setLocalStorageTokens,
   clearLocalStorage
 } from '../../utils/tokensHelper';
 import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/routesConstants';
 import { navigateTo } from '../../utils/history';
+import { result } from 'lodash';
+import * as ApiService from '../../services/apiService';
 import { act } from '@testing-library/react';
-
 interface FetchUserActionType {
   type: String;
   payload: {
@@ -27,104 +33,65 @@ interface SingupUserAction {
   };
 }
 
+const fetchuserloginData = (raw) => {
+  const APIObj = {
+    endPoint: '/login',
+    authenticationRequired: false,
+    method: 'POST',
+    body: raw
+  };
+
+  return ApiService.callApi(APIObj);
+};
 function* fetchUserAsync(action: FetchUserActionType) {
   try {
-    const {
-      payload: { email, password }
-    } = action;
-    console.log({ email, password });
-
-    // Do api call here
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    let success: boolean = false;
-
     var raw = JSON.stringify(action.payload);
-
-    var requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    const response = yield fetch(
-      'https://bookmarks-app-server.herokuapp.com/login',
-      requestOptions
-    );
+    const result1 = yield fetchuserloginData(raw);
+    setLocalStorageTokens({
+      email: result1.email,
+      accessToken: result1.token
+    });
+    yield put(requestUserSuccess(result1.email, result1.accessToken));
 
     toast.success('Logged In Successfully');
-    console.log(response);
     navigateTo(HOME_ROUTE);
-
-    yield put(
-      requestUserSuccess(response.name, response.token, response.token)
-    );
-
-    // setLocalStorageTokens({
-    //   username: response.name,
-    //   accessToken: data.accessToken,
-    //   refreshToken: data.refreshToken
-    // });
-
-    // const data = {
-    //   username: email,
-    //   accessToken: 'access-token-from-server',
-    //   refreshToken: 'refresh-token-from-server'
-    // };
-
-    // setLocalStorageTokens({
-    //   username: data.username,
-    //   accessToken: data.accessToken,
-    //   refreshToken: data.refreshToken
-    // });
-
-    // yield put(
-    //   requestUserSuccess(data.username, data.accessToken, data.refreshToken)
-    // );
+    // <<<<<<< HEAD
+    // >>>>>>> 0944b760328d70f144bcdcfe5fae12f5d48752d2
   } catch (error) {
     console.log(error);
     yield put(requestUserFailure());
   }
 }
 
-export function* signup(action: SingupUserAction) {
+const fetchusersignupData = (raw) => {
+  const APIObj = {
+    endPoint: '/register',
+    authenticationRequired: false,
+    method: 'POST',
+    body: raw
+  };
+
+  return ApiService.callApi(APIObj);
+};
+function* signup(action: SingupUserAction) {
   try {
-    const {
-      payload: { name, email, password }
-    } = action;
+    var raw = JSON.stringify(action.payload);
 
-    console.log({ name, email, password });
+    const result1 = yield fetchusersignupData(raw);
 
-    var myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    let raw = JSON.stringify(action.payload);
-
-    let requestOptions: RequestInit = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    // fetch('https://bookmarks-app-server.herokuapp.com/register', requestOptions)
-    //   .then((response) => response.text())
-    //   .then((result) => console.log(result))
-    //   .catch((error) => console.log('error', error));
-
-    const response = yield fetch(
-      'https://bookmarks-app-server.herokuapp.com/register',
-      requestOptions
-    );
-
-    toast.success('Signed Up Successfully');
+    setLocalStorageTokens({
+      email: result1.email,
+      accessToken: result1.token
+    });
     yield put(
-      requestUserSuccess(response.name, response.token, response.token)
+      requestUserSignupSuccess(result1.name, result1.email, result1.password)
     );
+
+    navigateTo(HOME_ROUTE);
+    toast.success('Signed In Successfully');
   } catch (error) {
     console.log(error);
-    yield put(requestUserFailure());
+    yield put(requestUserSignupFailure());
   }
 }
 
