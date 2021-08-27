@@ -1,3 +1,3 @@
-const asyncActions: String[] = ['USER', 'SIGNUP'];
+const asyncActions: String[] = ['USER'];
 
 export default asyncActions;

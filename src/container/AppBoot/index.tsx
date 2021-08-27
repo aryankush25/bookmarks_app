@@ -13,16 +13,13 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <Provider store={ReduxStore}>
-      {/* PersistGate delays the rendering of the app UI till the persisted state has been retrieved and saved to redux */}
       <PersistGate loading={null} persistor={persistor}>
         <div className="app-container">
-          {/* Used to preserve previous component path */}
           <ConnectedRouter history={history}>
             <AppRoutes />
           </ConnectedRouter>
         </div>
 
-        {/* react-toastify is used to add notifications */}
         <ToastContainer
           autoClose={3000}
           position="bottom-left"
