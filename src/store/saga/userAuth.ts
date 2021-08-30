@@ -55,8 +55,6 @@ function* fetchUserAsync(action: FetchUserActionType) {
 
     toast.success('Logged In Successfully');
     navigateTo(HOME_ROUTE);
-    // <<<<<<< HEAD
-    // >>>>>>> 0944b760328d70f144bcdcfe5fae12f5d48752d2
   } catch (error) {
     console.log(error);
     yield put(requestUserFailure());
