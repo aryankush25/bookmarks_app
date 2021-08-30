@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './styles.scss';
-import '../../Header/styles.scss';
+import '../../Quicklink/styles.scss';
 
 interface SharedInputsTypes {
   label: string;
