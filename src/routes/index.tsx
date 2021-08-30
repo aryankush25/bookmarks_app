@@ -12,14 +12,8 @@ import Landing from './Landing';
 import Login from './Login';
 import Home from './Home';
 import PageNotFound from './PageNotFound';
-import Signup from './Signup';
 import { isTokensPresentLocalStorage } from '../utils/tokensHelper';
-import {
-  ROOT_ROUTE,
-  LOGIN_ROUTE,
-  HOME_ROUTE,
-  SIGNUP_ROUTE
-} from '../utils/routesConstants';
+import { ROOT_ROUTE, LOGIN_ROUTE, HOME_ROUTE } from '../utils/routesConstants';
 
 interface RouteConfigProps {
   path: string | string[];
@@ -28,8 +22,6 @@ interface RouteConfigProps {
   exact: boolean;
   privateRoute: boolean;
 }
-
-// Private routes are only visible after
 
 const routesConfig = {
   landing: {
@@ -49,12 +41,6 @@ const routesConfig = {
     component: Home,
     exact: true,
     privateRoute: true
-  },
-  signup: {
-    path: SIGNUP_ROUTE,
-    component: Signup,
-    exact: true,
-    privateRoute: false
   }
 };
 
@@ -103,7 +89,6 @@ const AppRoutes = () => {
         );
       })}
 
-      {/* If nothing else matches, this will match */}
       <Route path="*" render={() => <PageNotFound />} />
     </Switch>
   );
