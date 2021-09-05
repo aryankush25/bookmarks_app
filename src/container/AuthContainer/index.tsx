@@ -6,7 +6,7 @@ const AuthContainer = (props) => {
   return (
     <div className="auth-wrapper">
       <div className="image-container">
-        <img src={logo} alt="Image Not Available"></img>
+        <img src={logo} alt=" Not Available"></img>
       </div>
       {props.children}
     </div>

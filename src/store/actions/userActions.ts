@@ -15,6 +15,48 @@ export const requestCreateBookmark = (url: string, folder: string) => {
   };
 };
 
+export const requestCreateFolder = (name: string) => {
+  return {
+    type: actionTypes.CREATE_FOLDER_REQUEST,
+    payload: { name }
+  };
+};
+
+export const requestCreateFolderSuccess = (name: string) => {
+  return {
+    type: actionTypes.CREATE_FOLDER_SUCCESS,
+    payload: { name }
+  };
+};
+
+export const requestCreateFolderFailure = () => {
+  return {
+    type: actionTypes.CREATE_FOLDER_FAILURE,
+    payload: {}
+  };
+};
+
+export const requestAccessFolder = (folderId: string) => {
+  return {
+    type: actionTypes.CREATE_FOLDER_REQUEST,
+    payload: { folderId }
+  };
+};
+
+export const requestAccessFolderSuccess = (folderId: string) => {
+  return {
+    type: actionTypes.CREATE_FOLDER_SUCCESS,
+    payload: { folderId }
+  };
+};
+
+export const requestAccessFolderFailure = () => {
+  return {
+    type: actionTypes.CREATE_FOLDER_FAILURE,
+    payload: {}
+  };
+};
+
 // export const requestUserSuccess = (
 //   username: string,
 //   accessToken: string,

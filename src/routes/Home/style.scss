@@ -11,13 +11,43 @@ a {
   display: flex;
 }
 .right-side {
-  width: 80%;
+  width: 100%;
+  background-color: #fafafb;
 }
 .Sidebar-head {
   width: 15%;
   padding-top: 2%;
   padding-bottom: 2%;
 }
+
+.search-section {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-bar {
+  padding: 12px 12px;
+  background-color: #f4f7fd;
+  color: white;
+  margin: 10px 10px;
+  display: inline-block;
+  border: 1px solid #f4f7fd;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.btn {
+  padding: 12px 12px;
+  background-color: #f4f7fd;
+  color: white;
+  margin: 10px 10px;
+
+  display: inline-block;
+  border: 1px solid #f4f7fd;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
 .sidebar {
   border-bottom: 1px solid #d4d4da;
   color: #7f7f7f;

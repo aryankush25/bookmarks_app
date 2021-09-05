@@ -1,0 +1,47 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+
+/* .App {
+  font-family: sans-serif;
+  text-align: center;
+} */
+.searching-bookmark {
+  .input-icon {
+    position: absolute;
+    left: 3px;
+    /* padding: 5px 5px; */
+    padding-left: 50px;
+    padding-right: 10px;
+    top: calc(
+      50% - 0.5em
+    ); /* Keep icon in center of input, regardless of the input height */
+  }
+  input {
+    padding-left: 17px;
+    border-radius: 10px;
+    padding: 1px 1px;
+
+    width: 45%;
+    background-color: #f1f1f1;
+    border: 1px solid white;
+  }
+
+  .btn {
+    padding-left: 17px;
+    border-radius: 8px;
+    padding: 10px 10px;
+    background-color: #f4f7fd;
+    color: white;
+    border: 1px solid #d2d2d2;
+    margin: 8px 5px;
+  }
+  ::placeholder {
+    padding: 10px 10px;
+    padding-left: 60px;
+  }
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding-left: 15px;
+  }
+}

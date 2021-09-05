@@ -1,0 +1,42 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.wrraper {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .card-section {
+    height: 368px;
+    width: 410px;
+    background-color: white;
+    color: black;
+    margin: 10px 10px;
+    margin-left: 15px;
+    padding: 10px 10px;
+    overflow: hidden;
+
+    font-size: 10px;
+    justify-content: space-between;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 200ms ease-in;
+    font-family: poppins;
+  }
+  h2 {
+    font-weight: normal;
+    font-size: 16px;
+  }
+  .bookmark-image {
+    height: 12rem;
+    width: 100%;
+    object-fit: cover;
+  }
+  h3 {
+    font-weight: normal;
+    padding-left: 5px;
+    overflow: hidden;
+    font-size: 14px;
+    color: gray;
+    text-overflow: ellipsis;
+  }
+}

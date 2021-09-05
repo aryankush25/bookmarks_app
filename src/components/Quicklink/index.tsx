@@ -7,7 +7,7 @@ import img1 from '../../assets/images/Group 17@3x.png';
 import './styles.scss';
 import SharedInput from '../shared/SharedInput';
 
-import { stat } from 'fs';
+// import { stat } from 'fs';
 
 export default function Home() {
   const [url, setUrl] = useState('');

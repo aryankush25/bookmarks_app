@@ -1,0 +1,31 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+.modal-section {
+  .App {
+    font-family: poppins;
+    text-align: center;
+  }
+
+  .btn {
+    background-color: #688ce6;
+    font-size: 18px;
+    border: 1px;
+    margin-top: 8px;
+    border-radius: 5px;
+    font-family: poppins;
+    color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .folder-input {
+    padding: 12px 12px;
+    width: 80%;
+    color: black;
+
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+  }
+}

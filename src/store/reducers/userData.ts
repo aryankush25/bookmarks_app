@@ -61,6 +61,43 @@ function userData(state = initialState, action: ActionType) {
         loginSpinner: false
       };
     }
+    case actionTypes.CREATE_FOLDER_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+
+    case actionTypes.CREATE_FOLDER_SUCCESS: {
+      return {
+        ...state
+      };
+    }
+
+    case actionTypes.CREATE_FOLDER_FAILURE: {
+      return {
+        ...state
+      };
+    }
+
+    case actionTypes.ACCESS_FOLDERS_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+
+    case actionTypes.ACCESS_FOLDERS_SUCCESS: {
+      return {
+        ...state
+      };
+    }
+
+    case actionTypes.ACCESS_FOLDERS_FAILURE: {
+      return {
+        ...state
+      };
+    }
 
     case actionTypes.LOGOUT:
       return initialState;

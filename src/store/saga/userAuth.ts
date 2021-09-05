@@ -5,7 +5,11 @@ import {
   requestUserSuccess,
   requestUserFailure,
   requestUserSignupSuccess,
-  requestUserSignupFailure
+  requestUserSignupFailure,
+  requestCreateFolderSuccess,
+  requestCreateFolderFailure,
+  requestAccessFolderSuccess,
+  requestAccessFolderFailure
 } from '../actions/userActions';
 import {
   setLocalStorageTokens,
@@ -13,9 +17,9 @@ import {
 } from '../../utils/tokensHelper';
 import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/routesConstants';
 import { navigateTo } from '../../utils/history';
-import { result } from 'lodash';
+// import { result } from 'lodash';
 import * as ApiService from '../../services/apiService';
-import { act } from '@testing-library/react';
+// import { act } from '@testing-library/react';
 interface FetchUserActionType {
   type: String;
   payload: {
@@ -33,6 +37,13 @@ interface SingupUserAction {
   };
 }
 
+interface CreateFolderAction {
+  type: String;
+  payload: {
+    name: string;
+  };
+}
+
 interface CreateBookmarkAction {
   type: String;
   payload: {
@@ -40,6 +51,14 @@ interface CreateBookmarkAction {
     folder: string;
   };
 }
+
+interface getFolders {
+  type: string;
+  payload: {
+    folderId: string;
+  };
+}
+
 const fetchuserloginData = (raw) => {
   const APIObj = {
     endPoint: '/login',
@@ -99,6 +118,34 @@ function* signup(action: SingupUserAction) {
     yield put(requestUserSignupFailure());
   }
 }
+
+export function* createfolder(action: CreateFolderAction) {
+  try {
+    const {
+      payload: { name }
+    } = action;
+
+    console.log({ name });
+    const response = yield fetch(
+      // process.env.REACT_APP_BACKEND_URL +'/bookmark'
+      'https://bookmarks-app-server.herokuapp.com/folder',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
+        },
+        body: JSON.stringify(action.payload)
+      }
+    );
+    yield put(requestCreateFolderSuccess('a'));
+  } catch (error) {
+    console.log(error);
+
+    yield put(requestCreateFolderFailure());
+  }
+}
+
 export function* createbookmark(action: CreateBookmarkAction) {
   try {
     const {
@@ -107,6 +154,7 @@ export function* createbookmark(action: CreateBookmarkAction) {
 
     console.log({ url, folder });
     const response = yield fetch(
+      // process.env.REACT_APP_BACKEND_URL +'/bookmark'
       'https://bookmarks-app-server.herokuapp.com/bookmark',
       {
         method: 'POST',
@@ -122,6 +170,33 @@ export function* createbookmark(action: CreateBookmarkAction) {
     console.log(error);
 
     yield put(requestUserFailure());
+  }
+}
+
+export function* getfolder(action: getFolders) {
+  try {
+    const {
+      payload: { folderId }
+    } = action;
+
+    console.log({ folderId });
+    const response = yield fetch(
+      // process.env.REACT_APP_BACKEND_URL +'/bookmark'
+      'https://bookmarks-app-server.herokuapp.com/folders',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
+        },
+        body: JSON.stringify(action.payload)
+      }
+    );
+    yield put(requestAccessFolderSuccess('a'));
+  } catch (error) {
+    console.log(error);
+
+    yield put(requestAccessFolderFailure());
   }
 }
 
@@ -145,6 +220,8 @@ export function* logout() {
 export default [
   takeLatest(actionTypes.USER_REQUEST, fetchUserAsync),
   takeLatest(actionTypes.LOGOUT, logout),
+  takeLatest(actionTypes.CREATE_FOLDER_REQUEST, createfolder),
   takeLatest(actionTypes.CREATE_BOOKMARK_REQUEST, createbookmark),
+  takeLatest(actionTypes.ACCESS_FOLDERS_REQUEST, getfolder),
   takeLatest(actionTypes.SIGNUP_REQUEST, signup)
 ];
