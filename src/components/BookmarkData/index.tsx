@@ -1,28 +1,31 @@
 import { divide } from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import spinner from '../../assets/images/spinner.gif';
+import {
+  requestAccessBookmark,
+  requestAccessBookmarkFailure,
+  requestAccessBookmarkSuccess,
+  requestAccessFolderDataSuccess
+} from '../../store/actions/userActions';
+import StoreState from '../../store/utils/StoreTypes';
 import './style.scss';
 
 function BookmarkData() {
-  const [bookmarks, setBookmark] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetch('https://bookmarks-app-server.herokuapp.com/folder-bookmarks', {
-      headers: {
-        Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
-      }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        setBookmark(data);
-        console.log('bookmarks', bookmarks);
-        setLoading(false);
-      });
-  }, []);
-  //   console.log('bookmarks', bookmarks);
+    setLoading(false);
+    dispatch(requestAccessBookmark());
+  }, [dispatch]);
+  const bookmarkss = useSelector((state: StoreState) => {
+    // console.log('state', state);
+    return state.userData.bookmarks;
+  });
+  // console.log('boookmarks', bookmarkss);
   return (
     <div className="wrraper">
       {loading ? (
@@ -30,7 +33,7 @@ function BookmarkData() {
           <img src={spinner} alt="loading" />
         </div>
       ) : (
-        bookmarks.map((bookmak, index) => (
+        bookmarkss.map((bookmak, index) => (
           <div key={index}>
             <div className="card-section">
               <img className="bookmark-image" src={bookmak.imageUrl} alt="" />

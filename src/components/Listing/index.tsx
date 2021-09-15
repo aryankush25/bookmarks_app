@@ -1,92 +1,122 @@
 import data from './test';
-import folder from '../../assets/images/folder@3x.png';
+import folderImg from '../../assets/images/folder@3x.png';
 import dropdown from '../../assets/images/right-arrow-black-triangle copy@3x.png';
-import { requestAccessFolder } from '../../store/actions/userActions';
+import {
+  requestAccessChildfolder,
+  requestAccessFolder
+} from '../../store/actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import './style.scss';
-import { methodOf } from 'lodash';
 
-const Tree = ({ data }) => {
+import StoreState from '../../store/utils/StoreTypes';
+
+const Tree = ({ folders, nodeData }) => {
+  console.log('folder', folders);
+  console.log('nodeData', nodeData);
   return (
     <div>
-      {data.map((tree) => (
-        <TreeNode node={tree} />
-      ))}
+      {folders.map((folder) => {
+        const { id } = folder;
+        return <TreeNode key={id} node={folder} nodeData={nodeData} />;
+      })}
     </div>
   );
 };
 
-const TreeNode = ({ node }) => {
-  console.log('node', node);
+const TreeNode = ({ node, nodeData }) => {
+  // console.log('nodeData', nodeData);
+  console.log('node', node.id);
   const [childVisible, setChildVisiblity] = useState(false);
-  const [childfolder, setChildfolder] = useState([]);
+  const loader = useSelector(
+    (state: StoreState) => state.userData.folderSpinner
+  );
 
-  useEffect(() => {
-    if (node.id) {
-      fetch('https://bookmarks-app-server.herokuapp.com/folders', {
-        headers: {
-          Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
-        },
-        method: 'POST',
-        body: JSON.stringify({ folderId: node.id })
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log('childData', data);
-          setChildfolder(data);
-        });
-    }
-  }, [node]);
+  const dispatch = useDispatch();
+  function handleClick() {
+    return dispatch(requestAccessChildfolder({ id: node['id'] }));
+  }
 
-  const hasChild = !!node.children;
+  // useEffect(() => {
+  //   dispatch(requestAccessChildfolder({ id: node['id'] }));
+  // }, []);
 
+  console.log('loader', loader);
+  const children = nodeData[node.id]; //folderId
+  // const id = node['id'];
+  // console.log('nodeData', nodeData);
+  console.log('child', children);
+
+  // const result = folders.map((parent) => ({
+  //   // Spread properties of the parent
+  //   ...parent,
+
+  //   children: child[parent.id]
+  // }));
+
+  // console.log('result', result);
+
+  const hasChild = node.id ? true : false; //value=true if not false
+  // console.log('hasChild', hasChild);
   return (
-    <div onClick={(e) => setChildfolder(childfolder)} className="tree-folder">
+    <div className="tree-folder">
       <div onClick={(e) => setChildVisiblity((v) => !v)}>
         <br />
+
         {hasChild && (
           <div className={`${childVisible ? 'active' : ''}`}>
-            <img className="dropdown-icon" src={dropdown} alt=""></img>
-            <img className="folder-icon" src={folder} alt=""></img>
+            <img
+              className="dropdown-icon"
+              onClick={handleClick}
+              src={dropdown}
+              alt=""></img>
+            <img className="folder-icon" src={folderImg} alt=""></img>
             {node.name}
           </div>
         )}
         {!hasChild && (
           <div>
-            <img className="folder-icon" src={folder} alt=""></img>
+            <img className="folder-icon" src={folderImg} alt=""></img>
             {node.name}
           </div>
         )}
       </div>
 
-      {hasChild && childVisible && (
+      {hasChild && childVisible && children && (
         <div>
-          <Tree data={node.children} />
+          <Tree folders={children} nodeData={nodeData} />
         </div>
+      )}
+
+      {loader && !children && childVisible && (
+        <>
+          <i
+            className="fa fa-refresh fa-spin"
+            style={{ marginLeft: '15px', color: 'green' }}
+          />
+        </>
       )}
     </div>
   );
 };
 
 const FolderChart = () => {
-  const [folderdata, setFolderdata] = useState([]);
   const dispatch = useDispatch();
-  // dispatch(requestAccessFolder(folderdata));
+
   useEffect(() => {
-    fetch('https://bookmarks-app-server.herokuapp.com/folders', {
-      headers: {
-        Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
-      }
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('mydata', data);
-        setFolderdata(data);
-      });
-  }, []);
-  // console.log('data', data);
-  console.log('folderdata', folderdata);
-  return <Tree data={folderdata} />;
+    console.log('abc');
+    dispatch(requestAccessFolder());
+  }, [dispatch]);
+  const folders = useSelector((state: StoreState) => {
+    // console.log('state', state);
+    return state.userData.folders;
+  });
+  console.log('foldersss', folders);
+  const nodeData = useSelector((state: StoreState) => {
+    console.log('state', state);
+    return state.userData.node;
+  });
+
+  return <Tree folders={folders} nodeData={nodeData} />;
 };
 export default FolderChart;

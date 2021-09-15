@@ -14,7 +14,12 @@ const initialState: UserDataReducerTypes = {
     email,
     accessToken
   },
-  loginSpinner: false
+  loginSpinner: false,
+  folderSpinner: false,
+  folders: [],
+  bookmarks: [],
+  node: {},
+  folderData: {}
 };
 
 function userData(state = initialState, action: ActionType) {
@@ -70,7 +75,8 @@ function userData(state = initialState, action: ActionType) {
 
     case actionTypes.CREATE_FOLDER_SUCCESS: {
       return {
-        ...state
+        ...state,
+        folder: action.payload
       };
     }
 
@@ -88,12 +94,85 @@ function userData(state = initialState, action: ActionType) {
     }
 
     case actionTypes.ACCESS_FOLDERS_SUCCESS: {
+      // console.log('AccessFolder', action.payload);
+      return {
+        ...state,
+        folders: action.payload.folders
+      };
+    }
+
+    case actionTypes.ACCESS_FOLDERS_FAILURE: {
       return {
         ...state
       };
     }
 
-    case actionTypes.ACCESS_FOLDERS_FAILURE: {
+    case actionTypes.ACCESS_BOOKMARKS_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+
+    case actionTypes.ACCESS_BOOKMARKS_SUCCESS: {
+      // console.log('AccessBookmarks', action.payload);
+      return {
+        ...state,
+        bookmarks: action.payload.bookmarks
+      };
+    }
+
+    case actionTypes.ACCESS_BOOKMARKS_FAILURE: {
+      return {
+        ...state
+      };
+    }
+
+    case actionTypes.ACCESS_CHILDFOLDER_REQUEST: {
+      return {
+        ...state,
+        userData: payload,
+        folderSpinner: true
+      };
+    }
+
+    case actionTypes.ACCESS_CHILDFOLDER_SUCCESS: {
+      // console.log('childFolder', action.payload);
+      // console.log('stateinside', state);
+
+      return {
+        ...state,
+        node: {
+          ...state.node,
+          [action.payload.folderId]: action.payload.node //dynamic key-value generation
+        },
+        folderSpinner: false
+      };
+    }
+
+    case actionTypes.ACCESS_CHILDFOLDER_FAILURE: {
+      return {
+        ...state,
+        folderSpinner: false
+      };
+    }
+    case actionTypes.ACCESS_FOLDERDATA_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+    case actionTypes.ACCESS_FOLDERDATA_SUCCESS: {
+      return {
+        ...state,
+        folderData: {
+          ...state.folderData,
+          [action.payload.folderId]: action.payload.folderData
+        }
+      };
+    }
+
+    case actionTypes.ACCESS_FOLDERDATA_FAILURE: {
       return {
         ...state
       };

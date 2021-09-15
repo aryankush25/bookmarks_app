@@ -37,6 +37,7 @@ const Home = () => {
   return (
     <div className="Main-container">
       <div>
+        {/* <SharedButton label="LogOut" onClick={logoutRequestHandler} /> */}
         <Navigationbar />
       </div>
       <div className="sidebar-container">
@@ -153,8 +154,6 @@ const Home = () => {
           <BookmarkData />
         </div>
       </div>
-
-      <SharedButton label="LogOut" onClick={logoutRequestHandler} />
     </div>
   );
 };

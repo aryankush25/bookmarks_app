@@ -8,7 +8,11 @@ interface SharedButtonTypes {
 }
 
 const SharedButton = ({ label, onClick }: SharedButtonTypes) => {
-  return <button onClick={onClick}>{label}</button>;
+  return (
+    <button className="shared-button" onClick={onClick}>
+      {label}
+    </button>
+  );
 };
 
 export default SharedButton;
