@@ -22,7 +22,7 @@ function Searching() {
             padding: '17px 17px',
             marginLeft: '390px'
           }}>
-          <img src={img2}></img>
+          <img src={img2} alt="Not"></img>
         </button>
 
         <button
@@ -41,7 +41,8 @@ function Searching() {
               height: '100%',
               width: '100%'
             }}
-            src={menu}></img>
+            src={menu}
+            alt="Not Found"></img>
         </button>
         <button
           style={{
@@ -58,7 +59,8 @@ function Searching() {
               height: '100%',
               width: '100%'
             }}
-            src={list}></img>
+            src={list}
+            alt="NotFound"></img>
         </button>
       </div>
     </div>

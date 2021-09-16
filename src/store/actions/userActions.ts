@@ -1,6 +1,5 @@
 import actionTypes from '../actionTypes';
 
-console.log('actiontype', actionTypes);
 export const requestUserRequest = (email: string, password: string) => {
   return {
     type: actionTypes.USER_REQUEST,
@@ -68,9 +67,16 @@ export const requestAccessFolderFailure = () => {
   };
 };
 
-export const requestAccessBookmark = () => {
+export const requestAccessBookmarkDefault = () => {
   return {
     type: actionTypes.ACCESS_BOOKMARKS_REQUEST
+  };
+};
+
+export const requestAccessBookmark = (id) => {
+  return {
+    type: actionTypes.ACCESS_FOLDERDATA_REQUEST,
+    payload: { id }
   };
 };
 
@@ -110,10 +116,10 @@ export const requestAccessChildfolderFailure = () => {
   };
 };
 
-export const requestAccessFolderData = (folderData) => {
+export const requestAccessFolderData = (id) => {
   return {
     type: actionTypes.ACCESS_FOLDERDATA_REQUEST,
-    payload: { folderData }
+    payload: { id }
   };
 };
 
@@ -121,7 +127,6 @@ export const requestAccessFolderDataSuccess = (folderData: {
   folderId: String;
   folderData: any;
 }) => {
-  console.log('insideFolderData', folderData);
   return {
     type: actionTypes.ACCESS_FOLDERDATA_SUCCESS,
     payload: {

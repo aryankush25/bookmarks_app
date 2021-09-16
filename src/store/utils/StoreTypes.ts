@@ -9,6 +9,7 @@ export interface UserDataReducerTypes {
   userData: UserDataTypes;
   loginSpinner: boolean;
   folderSpinner: boolean;
+  bookmarkLoader: boolean;
   folders: any[];
   bookmarks: any[];
   node: {};

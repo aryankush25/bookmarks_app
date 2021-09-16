@@ -16,10 +16,11 @@ const initialState: UserDataReducerTypes = {
   },
   loginSpinner: false,
   folderSpinner: false,
+  bookmarkLoader: false,
   folders: [],
   bookmarks: [],
   node: {},
-  folderData: {}
+  folderData: []
 };
 
 function userData(state = initialState, action: ActionType) {
@@ -94,7 +95,6 @@ function userData(state = initialState, action: ActionType) {
     }
 
     case actionTypes.ACCESS_FOLDERS_SUCCESS: {
-      // console.log('AccessFolder', action.payload);
       return {
         ...state,
         folders: action.payload.folders
@@ -110,21 +110,23 @@ function userData(state = initialState, action: ActionType) {
     case actionTypes.ACCESS_BOOKMARKS_REQUEST: {
       return {
         ...state,
-        userData: payload
+        userData: payload,
+        bookmarkLoader: true
       };
     }
 
     case actionTypes.ACCESS_BOOKMARKS_SUCCESS: {
-      // console.log('AccessBookmarks', action.payload);
       return {
         ...state,
-        bookmarks: action.payload.bookmarks
+        bookmarks: action.payload.bookmarks,
+        bookmarkLoader: false
       };
     }
 
     case actionTypes.ACCESS_BOOKMARKS_FAILURE: {
       return {
-        ...state
+        ...state,
+        bookmarkLoader: false
       };
     }
 
@@ -137,9 +139,6 @@ function userData(state = initialState, action: ActionType) {
     }
 
     case actionTypes.ACCESS_CHILDFOLDER_SUCCESS: {
-      // console.log('childFolder', action.payload);
-      // console.log('stateinside', state);
-
       return {
         ...state,
         node: {
@@ -165,10 +164,8 @@ function userData(state = initialState, action: ActionType) {
     case actionTypes.ACCESS_FOLDERDATA_SUCCESS: {
       return {
         ...state,
-        folderData: {
-          ...state.folderData,
-          [action.payload.folderId]: action.payload.folderData
-        }
+
+        folderData: action.payload.folderData
       };
     }
 

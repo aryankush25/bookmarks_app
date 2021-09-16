@@ -16,7 +16,8 @@ import {
   requestAccessChildfolderFailure,
   requestCreateBookmarkSuccess,
   requestCreateBookmarkFailure,
-  requestAccessFolderDataSuccess
+  requestAccessFolderDataSuccess,
+  requestAccessFolderDataFailure
 } from '../actions/userActions';
 import {
   setLocalStorageTokens,
@@ -66,7 +67,9 @@ interface getFolders {
 
 interface getFolderdatas {
   type: string;
-  payload: {};
+  payload: {
+    id: string | undefined;
+  };
 }
 interface getChildfolder {
   type: string;
@@ -187,33 +190,6 @@ export function* createbookmark(action: CreateBookmarkAction) {
   }
 }
 
-// export function* createbookmark(action: CreateBookmarkAction) {
-//   try {
-//     const {
-//       payload: { url, folder }
-//     } = action;
-
-//     console.log({ url, folder });
-//     const response = yield fetch(
-//       // process.env.REACT_APP_BACKEND_URL +'/bookmark'
-//       'https://bookmarks-app-server.herokuapp.com/bookmark',
-//       {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
-//         },
-//         body: JSON.stringify(action.payload)
-//       }
-//     );
-//     yield put(requestUserSuccess('a', 'b'));
-//   } catch (error) {
-//     console.log(error);
-
-//     yield put(requestUserFailure());
-//   }
-// }
-
 const getallFolder = (raw) => {
   const APIObj = {
     endPoint: '/folders',
@@ -260,35 +236,6 @@ export function* getchildfolder(action: getChildfolder) {
   }
 }
 
-// export function* getchildfolder(action: getChildfolder) {
-//   try {
-//     const {} = action;
-
-//     const response = yield fetch(
-//       // process.env.REACT_APP_BACKEND_URL +'/bookmark'
-//       `https://bookmarks-app-server.herokuapp.com/folders?folderId=${action.payload.id}`,
-//       {
-//         method: 'GET',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
-//         }
-//       }
-//     ).then((res) => res.json());
-//     console.log('Api Response', response);
-//     yield put(
-//       requestAccessChildfolderSuccess({
-//         node: response,
-//         folderId: action.payload.id
-//       })
-//     );
-//   } catch (error) {
-//     console.log(error);
-
-//     yield put(requestAccessChildfolderFailure());
-//   }
-// }
-
 const getBookmark = (raw) => {
   const APIObj = {
     endPoint: '/folder-bookmarks',
@@ -313,50 +260,33 @@ export function* getbookmark(action: getBookmarks) {
   }
 }
 
-// export function* getbookmark(action: getBookmarks) {
-//   try {
-//     const {} = action;
-
-//     // console.log('getBoomarks');
-//     const response = yield fetch(
-//       // process.env.REACT_APP_BACKEND_URL +'/bookmark'
-//       'https://bookmarks-app-server.herokuapp.com/folder-bookmarks',
-//       {
-//         method: 'GET',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           Authorization: `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNTMzYjY2LWZiMTAtNDkxMC1hNDRhLTZjYWIwZjU2ZTYyZCIsImVtYWlsIjoidGVzdDFAZW1haWwuY29tIiwiZXhwIjoxNjM0OTY4NDQwLCJpYXQiOjE2Mjk3ODQ0NDB9.C4w_VXqaFLeab3eATiP-TxIPGjSMBJfFyAFxzyBYqqo'}`
-//         },
-//         body: JSON.stringify(action.payload)
-//       }
-//     ).then((res) => res.json());
-//     // console.log('Api Response', response);
-//     yield put(requestAccessBookmarkSuccess(response));
-//   } catch (error) {
-//     console.log(error);
-
-//     yield put(requestAccessBookmarkFailure());
-//   }
-// }
-
 const getFolderData = (id) => {
+  console.log('id', id);
   const APIObj = {
     endPoint: `/folder-bookmarks?folderId=${id}`,
     authenticationRequired: true,
     method: 'GET'
   };
+  return ApiService.callApi(APIObj);
 };
 
 export function* getFolderdata(action: getFolderdatas) {
+  console.log('action.payload.id', action);
   try {
     var raw = JSON.stringify(action.payload);
 
-    const result1 = yield getFolderData(action.payload);
-
-    yield put(requestAccessFolderDataSuccess(result1));
+    const result1 = yield getFolderData(action.payload.id);
+    delete result1.responseStatus;
+    console.log('result', result1);
+    yield put(
+      requestAccessFolderDataSuccess({
+        folderId: action.payload.id,
+        folderData: result1
+      })
+    );
   } catch (error) {
     console.log(error);
-    yield put(requestAccessFolderFailure());
+    yield put(requestAccessFolderDataFailure());
   }
 }
 
@@ -385,5 +315,6 @@ export default [
   takeLatest(actionTypes.ACCESS_FOLDERS_REQUEST, getfolder),
   takeEvery(actionTypes.ACCESS_CHILDFOLDER_REQUEST, getchildfolder),
   takeLatest(actionTypes.ACCESS_BOOKMARKS_REQUEST, getbookmark),
+  takeEvery(actionTypes.ACCESS_FOLDERDATA_REQUEST, getFolderdata),
   takeLatest(actionTypes.SIGNUP_REQUEST, signup)
 ];

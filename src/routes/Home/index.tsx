@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import { useHomeHook } from './hooks';
 import { requestCreateFolder } from '../../store/actions/userActions';
 
-import SharedButton from '../../components/shared/SharedButton';
 import FolderChart from '../../components/Listing';
 import Navigationbar from '../../components/Header';
 import add from '../../assets/images/add.png';
@@ -19,7 +17,6 @@ import BookmarkData from '../../components/BookmarkData';
 import Searching from '../../components/Searching';
 
 const Home = () => {
-  const { logoutRequestHandler } = useHomeHook();
   const [foldername, setFoldername] = useState('');
   const [showModal, setshowModal] = useState(false);
 

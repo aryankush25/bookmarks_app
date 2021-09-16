@@ -3,10 +3,10 @@ import React from 'react';
 import { useHomeHook } from '../../routes/Home/hooks';
 import SharedButton from '../../components/shared/SharedButton';
 
-import dropIcon from '../../assets/images/ic_Dropdown@3x.png';
-import name from '../../assets/images/Shivam Chaudhary@3x.png';
-import profile from '../../assets/images/Profile@3x.png';
-import notification from '../../assets/images/Group 2@3x.png';
+// import dropIcon from '../../assets/images/ic_Dropdown@3x.png';
+// import name from '../../assets/images/Shivam Chaudhary@3x.png';
+// import profile from '../../assets/images/Profile@3x.png';
+// import notification from '../../assets/images/Group 2@3x.png';
 import logo from '../../assets/images/LOGO@3x.png';
 import './style.scss';
 

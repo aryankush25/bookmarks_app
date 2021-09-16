@@ -3,12 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import spinner from '../../assets/images/spinner.gif';
-import {
-  requestAccessBookmark,
-  requestAccessBookmarkFailure,
-  requestAccessBookmarkSuccess,
-  requestAccessFolderDataSuccess
-} from '../../store/actions/userActions';
+import { requestAccessBookmarkDefault } from '../../store/actions/userActions';
 import StoreState from '../../store/utils/StoreTypes';
 import './style.scss';
 
@@ -19,26 +14,48 @@ function BookmarkData() {
 
   useEffect(() => {
     setLoading(false);
-    dispatch(requestAccessBookmark());
+    dispatch(requestAccessBookmarkDefault());
   }, [dispatch]);
-  const bookmarkss = useSelector((state: StoreState) => {
-    // console.log('state', state);
+  const bookmarks = useSelector((state: StoreState) => {
     return state.userData.bookmarks;
   });
-  // console.log('boookmarks', bookmarkss);
+
+  const foldersBookmark = useSelector((state: StoreState) => {
+    console.log('state', state);
+    console.log('typeofState', typeof state.userData.folderData);
+    return state.userData.folderData;
+  }) as any[]; //TypeCasting Here
+
+  console.log('foldersBookmark', foldersBookmark);
+  const toggle = foldersBookmark.length === 0;
+
+  const loader = useSelector(
+    (state: StoreState) => state.userData.bookmarkLoader
+  );
+  console.log('toggle', toggle);
   return (
     <div className="wrraper">
-      {loading ? (
+      {loader ? (
         <div style={{ textAlign: 'center' }}>
           <img src={spinner} alt="loading" />
         </div>
-      ) : (
-        bookmarkss.map((bookmak, index) => (
+      ) : !toggle ? (
+        foldersBookmark.map((bookmark, index) => (
           <div key={index}>
             <div className="card-section">
-              <img className="bookmark-image" src={bookmak.imageUrl} alt="" />
-              <h2 style={{ padding: '5px 5px' }}>{bookmak.name}</h2>
-              <h3>{bookmak.description}</h3>
+              <img className="bookmark-image" src={bookmark.imageUrl} alt="" />
+              <h2 style={{ padding: '5px 5px' }}>{bookmark.name}</h2>
+              <h3>{bookmark.description}</h3>
+            </div>
+          </div>
+        ))
+      ) : (
+        bookmarks.map((bookmark, index) => (
+          <div key={index}>
+            <div className="card-section">
+              <img className="bookmark-image" src={bookmark.imageUrl} alt="" />
+              <h2 style={{ padding: '5px 5px' }}>{bookmark.name}</h2>
+              <h3>{bookmark.description}</h3>
             </div>
           </div>
         ))
