@@ -13,7 +13,8 @@ export interface UserDataReducerTypes {
   folders: any[];
   bookmarks: any[];
   node: {};
-  folderData: {};
+  folderData: any[];
+  folderId: string;
 }
 
 export default interface StoreState {

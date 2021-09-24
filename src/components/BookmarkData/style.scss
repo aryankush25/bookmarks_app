@@ -6,9 +6,10 @@
   flex-direction: row;
   flex-wrap: wrap;
   .card-section {
-    height: 368px;
-    width: 410px;
-    background-color: white;
+    // position: relative;
+    height: 273px;
+    width: 347px;
+    background-color: #fcfcfc;
     color: black;
     margin: 10px 10px;
     margin-left: 15px;
@@ -27,9 +28,85 @@
     font-size: 16px;
   }
   .bookmark-image {
-    height: 12rem;
-    width: 100%;
+    width: 357px;
+    height: 137px;
     object-fit: cover;
+    border-radius: 10px;
+  }
+  .bookmark-content {
+    width: 80%;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+  }
+  .bookmark-menu {
+    width: 10%;
+    // padding-left: 90px;
+    position: relative;
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+  }
+  .bookmark-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .edit {
+    width: 20%;
+    background-color: blanchedalmond;
+    border: 1px solid white;
+    border-radius: 5px;
+  }
+  .edit:hover {
+    background-color: palegreen;
+  }
+  .delete {
+    width: 20%;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: orange;
+  }
+  .delete:hover {
+    background-color: red;
+  }
+  .dots-menu {
+    font-size: 15px;
+    &.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+      border-radius: 5px;
+    }
+
+    a.btn {
+      /* @extend .glyphicon !optional;
+    &:before{
+      content: "\e235";
+    } */
+
+      &:active {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+    }
+
+    ul {
+      &.dropdown-menu {
+        right: auto;
+        left: 15px;
+        min-width: 50px;
+
+        li {
+          padding: 0;
+          width: 100%;
+          a {
+            margin: 0;
+          }
+        }
+      }
+    }
   }
   h3 {
     font-weight: normal;

@@ -1,28 +1,108 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
-/* .App {
-  font-family: sans-serif;
-  text-align: center;
-} */
 .searching-bookmark {
   .input-icon {
     position: absolute;
     left: 3px;
     /* padding: 5px 5px; */
     padding-left: 50px;
-    padding-right: 10px;
+    // padding-right: 10px;
     top: calc(
       50% - 0.5em
     ); /* Keep icon in center of input, regardless of the input height */
   }
   input {
-    padding-left: 17px;
     border-radius: 10px;
     padding: 1px 1px;
     color: black;
-    width: 45%;
+    width: 25%;
     background-color: #f1f1f1;
     border: 1px solid white;
+  }
+  input:focus {
+    border: 0px !important;
+  }
+
+  input.middle:focus {
+    outline-width: 0;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+    outline: none;
+  }
+  #stuff {
+    padding-left: 55px;
+    padding-top: 15px;
+    padding-bottom: 14px;
+  }
+
+  .add-link {
+    border-radius: 30px;
+    border: 1px solid #6a87e6;
+    background-color: white;
+    padding: 1px 17px;
+    margin-left: 550px;
+    height: 38px;
+    width: 142px;
+    margin-top: 10px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .grid-view {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 8px 17px;
+    background-color: white;
+    margin-left: 19px;
+    border: 1px solid white;
+    justify-content: center;
+    height: 38px;
+    width: 94px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  .gridview-true {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 8px 17px;
+    background-color: #6a87e6;
+    margin-left: 19px;
+    border: 1px solid white;
+    justify-content: center;
+    height: 38px;
+    width: 94px;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .list-view {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 8px 17px;
+    background-color: #f0f1f6;
+    border: 1px solid white;
+    justify-content: center;
+    height: 38px;
+    width: 94px;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .listview-true {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 8px 17px;
+    border: 1px solid white;
+    justify-content: center;
+    height: 38px;
+    width: 94px;
+    margin-top: 10px;
+    text-align: center;
+    background-color: #6a87e6;
   }
 
   .btn {
@@ -43,5 +123,6 @@
     display: flex;
     flex-direction: row;
     padding-left: 15px;
+    align-items: center;
   }
 }

@@ -20,6 +20,26 @@
   padding-left: 6%;
   white-space: nowrap;
   border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+.folder-name {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+
+  max-width: 80px;
+  left: 0;
+  text-overflow: ellipsis;
+}
+.inside-folder {
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding-right: 0;
 }
 .tree-folder:hover {
   background-color: #f1f1f1;

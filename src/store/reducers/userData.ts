@@ -20,7 +20,8 @@ const initialState: UserDataReducerTypes = {
   folders: [],
   bookmarks: [],
   node: {},
-  folderData: []
+  folderData: [],
+  folderId: ''
 };
 
 function userData(state = initialState, action: ActionType) {
@@ -47,6 +48,7 @@ function userData(state = initialState, action: ActionType) {
       };
     }
     case actionTypes.CREATE_BOOKMARK_REQUEST: {
+      console.log('payload State', payload);
       return {
         ...state,
         userData: payload,
@@ -82,6 +84,46 @@ function userData(state = initialState, action: ActionType) {
     }
 
     case actionTypes.CREATE_FOLDER_FAILURE: {
+      return {
+        ...state
+      };
+    }
+
+    case actionTypes.CREATE_SUBFOLDER_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+
+    case actionTypes.CREATE_SUBFOLDER_SUCCESS: {
+      return {
+        ...state,
+        subfolder: action.payload
+      };
+    }
+
+    case actionTypes.CREATE_SUBFOLDER_FAILURE: {
+      return {
+        ...state
+      };
+    }
+
+    case actionTypes.CREATE_RENAME_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+
+    case actionTypes.CREATE_RENAME_SUCCESS: {
+      return {
+        ...state,
+        rename: action.payload
+      };
+    }
+
+    case actionTypes.CREATE_RENAME_FAILURE: {
       return {
         ...state
       };
@@ -130,6 +172,28 @@ function userData(state = initialState, action: ActionType) {
       };
     }
 
+    case actionTypes.DELETE_BOOKMARK_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+
+    case actionTypes.DELETE_BOOKMARK_SUCCESS: {
+      return {
+        ...state,
+        bookmarks: state.bookmarks.filter(
+          (bookmark) => bookmark !== action.payload
+        )
+      };
+    }
+
+    case actionTypes.DELETE_BOOKMARK_FAILURE: {
+      return {
+        ...state
+      };
+    }
+
     case actionTypes.ACCESS_CHILDFOLDER_REQUEST: {
       return {
         ...state,
@@ -158,7 +222,7 @@ function userData(state = initialState, action: ActionType) {
     case actionTypes.ACCESS_FOLDERDATA_REQUEST: {
       return {
         ...state,
-        userData: payload
+        userData: payload //id
       };
     }
     case actionTypes.ACCESS_FOLDERDATA_SUCCESS: {
@@ -170,6 +234,26 @@ function userData(state = initialState, action: ActionType) {
     }
 
     case actionTypes.ACCESS_FOLDERDATA_FAILURE: {
+      return {
+        ...state
+      };
+    }
+
+    case actionTypes.DELETE_FOLDER_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+
+    case actionTypes.DELETE_FOLDER_SUCCESS: {
+      return {
+        ...state,
+        folders: state.folders.filter((folder) => folder !== action.payload)
+      };
+    }
+
+    case actionTypes.DELETE_FOLDER_FAILURE: {
       return {
         ...state
       };

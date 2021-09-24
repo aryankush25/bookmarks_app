@@ -7,16 +7,16 @@ export const requestUserRequest = (email: string, password: string) => {
   };
 };
 
-export const requestCreateBookmark = (url: string, folder: string) => {
+export const requestCreateBookmark = (url: string, folderId: any) => {
   return {
     type: actionTypes.CREATE_BOOKMARK_REQUEST,
-    payload: { url, folder }
+    payload: { url, folderId }
   };
 };
-export const requestCreateBookmarkSuccess = (url: string, folder: string) => {
+export const requestCreateBookmarkSuccess = (url: string, folderId: string) => {
   return {
     type: actionTypes.CREATE_BOOKMARK_SUCCESS,
-    payload: { url, folder }
+    payload: { url, folderId }
   };
 };
 
@@ -26,6 +26,27 @@ export const requestCreateBookmarkFailure = () => {
     payload: {}
   };
 };
+
+export const requestDeleteBookmark = (bookmarkId: string) => {
+  return {
+    type: actionTypes.DELETE_BOOKMARK_REQUEST,
+    payload: bookmarkId
+  };
+};
+
+export const requestDeleteBookmarkSuccess = (bookmarks: any[]) => {
+  return {
+    type: actionTypes.DELETE_BOOKMARK_SUCCESS,
+    payload: { bookmarks }
+  };
+};
+
+export const requestDeleteBookmarkFailure = () => {
+  return {
+    type: actionTypes.DELETE_BOOKMARK_FAILURE
+  };
+};
+
 export const requestCreateFolder = (name: string) => {
   return {
     type: actionTypes.CREATE_FOLDER_REQUEST,
@@ -47,6 +68,49 @@ export const requestCreateFolderFailure = () => {
   };
 };
 
+//Add sub-folder
+export const requestAddSubFolder = (name: string, parentId: string) => {
+  return {
+    type: actionTypes.CREATE_SUBFOLDER_REQUEST,
+    payload: { name, parentId }
+  };
+};
+
+export const requestAddSubFolderSuccess = (name: string, parentId: string) => {
+  return {
+    type: actionTypes.CREATE_SUBFOLDER_SUCCESS,
+    payload: { name, parentId }
+  };
+};
+
+export const requestAddSubFolderFailure = () => {
+  return {
+    type: actionTypes.CREATE_SUBFOLDER_FAILURE,
+    payload: {}
+  };
+};
+
+export const requestRenameFolder = (name: string, folderId: string) => {
+  return {
+    type: actionTypes.CREATE_RENAME_REQUEST,
+    payload: { name, folderId }
+  };
+};
+
+export const requestRenameFolderSuccess = (name: string, folderId: string) => {
+  return {
+    type: actionTypes.CREATE_RENAME_SUCCESS,
+    payload: { name, folderId }
+  };
+};
+
+export const requestRenameFolderFailure = () => {
+  return {
+    type: actionTypes.CREATE_RENAME_FAILURE,
+    payload: {}
+  };
+};
+
 export const requestAccessFolder = () => {
   return {
     type: actionTypes.ACCESS_FOLDERS_REQUEST
@@ -64,6 +128,26 @@ export const requestAccessFolderFailure = () => {
   return {
     type: actionTypes.ACCESS_FOLDERS_FAILURE,
     payload: {}
+  };
+};
+
+export const requestDeleteFolder = (folderId: string) => {
+  return {
+    type: actionTypes.DELETE_FOLDER_REQUEST,
+    payload: folderId
+  };
+};
+
+export const requestDeleteFolderSuccess = (folders: any[]) => {
+  return {
+    type: actionTypes.DELETE_FOLDER_SUCCESS,
+    payload: { folders }
+  };
+};
+
+export const requestDeleteFolderFailure = () => {
+  return {
+    type: actionTypes.DELETE_FOLDER_FAILURE
   };
 };
 
@@ -122,7 +206,7 @@ export const requestAccessFolderData = (id) => {
     payload: { id }
   };
 };
-
+//folderData:{"FolderId", folderData:{}}
 export const requestAccessFolderDataSuccess = (folderData: {
   folderId: String;
   folderData: any;

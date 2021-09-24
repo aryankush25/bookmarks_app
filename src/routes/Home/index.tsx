@@ -15,9 +15,12 @@ import './styles.scss';
 import Header from '../../components/Quicklink';
 import BookmarkData from '../../components/BookmarkData';
 import Searching from '../../components/Searching';
+import BookmarkListView from '../../components/BookmarkListView';
 
 const Home = () => {
   const [foldername, setFoldername] = useState('');
+
+  const [view, setView] = useState(true);
   const [showModal, setshowModal] = useState(false);
 
   function handleCreateFolder(e) {
@@ -66,7 +69,6 @@ const Home = () => {
             <button
               onClick={() => {
                 setshowModal(true);
-                console.log('Triggrerd Function onclick');
               }}
               className="btn">
               <img className="add-icon" src={add} alt=""></img>
@@ -147,8 +149,10 @@ const Home = () => {
         </div>
         <div className="right-side">
           <Header />
-          <Searching />
-          <BookmarkData />
+          <Searching view={view} setView={setView} />
+          {view ? <BookmarkData /> : <BookmarkListView />}
+
+          {/* <BookmarkData /> */}
         </div>
       </div>
     </div>

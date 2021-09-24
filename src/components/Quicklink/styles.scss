@@ -22,6 +22,26 @@
     display: table;
   }
 
+  .select-folder-input {
+    padding: 5px 5px;
+    background-color: #686fc5;
+    width: 60%;
+    color: #5960c1;
+    margin: 30px 30px;
+    display: inline-block;
+    // border: 1px solid #686fc5;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-top: -2px;
+  }
+  .folder-h1 {
+    padding: 12px 12px 12px 0;
+    padding-left: 40px;
+    margin-right: auto;
+    color: white;
+    display: inline-block;
+  }
+
   label {
     padding: 12px 12px 12px 0;
     padding-left: 40px;
@@ -47,7 +67,7 @@
     float: right;
     border-radius: 5px;
     margin-bottom: 20px;
-    margin-right: 8%;
+    margin-right: 7%;
     font-family: poppins;
     padding-left: 30px;
     padding-right: 30px;

@@ -10,6 +10,7 @@ import React, { useState, useEffect } from 'react';
 import './style.scss';
 
 import StoreState from '../../store/utils/StoreTypes';
+import FolderMenu from '../FolderMenu';
 
 const Tree = ({ folders, nodeData }) => {
   return (
@@ -54,43 +55,70 @@ const TreeNode = ({ node, nodeData }) => {
   const hasChild = node.id ? true : false; //value=true if not false
 
   return (
-    <div onClick={dispatchBookmark} className="tree-folder">
-      <div onClick={(e) => setChildVisiblity((v) => !v)}>
-        <br />
+    <div
+      style={{
+        display: 'flex'
+        //   flexDirection: 'row',
+        //   textAlign: 'center',
+        //   justifyContent: 'center'
+      }}>
+      <div onClick={dispatchBookmark} className="tree-folder">
+        <div onClick={(e) => setChildVisiblity((v) => !v)}>
+          <br />
 
-        {hasChild && (
-          <div className={`${childVisible ? 'active' : ''}`}>
-            <img
-              className="dropdown-icon"
-              onClick={handleClick}
-              src={dropdown}
-              alt=""></img>
-            <img className="folder-icon" src={folderImg} alt=""></img>
-            {node.name}
+          {hasChild && (
+            <div
+              style={{
+                display: 'flex',
+                position: 'relative',
+                alignItems: 'baseline',
+                justifyContent: 'space-evenly'
+                // width: '80%'
+                // backgroundColor: 'cyan'
+              }}
+              className={`${childVisible ? 'active' : ''}`}>
+              <img
+                className="dropdown-icon"
+                onClick={handleClick}
+                src={dropdown}
+                alt=""></img>
+              <img className="folder-icon" src={folderImg} alt=""></img>
+              <div className="folder-name">{node.name}</div>
+              <div
+              // style={{ marginTop: '-10px' }}
+              >
+                <FolderMenu folders={node} />
+              </div>
+            </div>
+          )}
+          {!hasChild && (
+            <div className="inside-folder">
+              <img className="folder-icon" src={folderImg} alt=""></img>
+              <div className="folder-name">{node.name}</div>
+            </div>
+          )}
+        </div>
+
+        {hasChild && childVisible && children && (
+          <div>
+            <Tree folders={children} nodeData={nodeData} />
+            <div
+            // style={{ marginTop: '-10px' }}
+            >
+              <FolderMenu folders={node} />
+            </div>
           </div>
         )}
-        {!hasChild && (
-          <div>
-            <img className="folder-icon" src={folderImg} alt=""></img>
-            {node.name}
-          </div>
+
+        {loader && !children && childVisible && (
+          <>
+            <i
+              className="fa fa-refresh fa-spin"
+              style={{ marginLeft: '15px', color: 'green' }}
+            />
+          </>
         )}
       </div>
-
-      {hasChild && childVisible && children && (
-        <div>
-          <Tree folders={children} nodeData={nodeData} />
-        </div>
-      )}
-
-      {loader && !children && childVisible && (
-        <>
-          <i
-            className="fa fa-refresh fa-spin"
-            style={{ marginLeft: '15px', color: 'green' }}
-          />
-        </>
-      )}
     </div>
   );
 };
@@ -104,13 +132,13 @@ const FolderChart = () => {
   const folders = useSelector((state: StoreState) => {
     return state.userData.folders;
   });
-  console.log('foldersss', folders);
-  console.log('folders typ', typeof folders);
+  // console.log('foldersss', folders);
+  // console.log('folders typ', typeof folders);
   const nodeData = useSelector((state: StoreState) => {
     console.log('state', state);
     return state.userData.node;
   });
-  console.log('nodeAdata', nodeData);
+  // console.log('nodeAdata', nodeData);
   return <Tree folders={folders} nodeData={nodeData} />;
 };
 export default FolderChart;

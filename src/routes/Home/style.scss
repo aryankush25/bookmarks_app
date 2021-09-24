@@ -25,6 +25,20 @@ a {
   flex-direction: row;
 }
 
+input:focus {
+  border: 0px !important;
+}
+
+input.middle:focus {
+  outline-width: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
 .search-bar {
   padding: 12px 12px;
   background-color: #f4f7fd;
