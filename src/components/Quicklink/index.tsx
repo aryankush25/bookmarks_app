@@ -38,19 +38,16 @@ export default function Home() {
     value: folder.id,
     label: folder.name
   }));
-  console.log('options', options);
+
   const [url, setUrl] = useState('');
   const [folder, setFolder] = useState('');
 
   function handleChangeUrl(e) {
     setUrl(e.target.value);
-    console.log('setUrl', url);
   }
 
   function handleChangeFolder(e) {
-    console.log('e', e);
     setFolder(e);
-    console.log('setFolder', folder);
   }
 
   function handleSubmit(event) {

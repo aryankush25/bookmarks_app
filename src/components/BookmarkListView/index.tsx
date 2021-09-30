@@ -26,12 +26,11 @@ function BookmarkListView() {
   const bookmarks = useSelector((state: StoreState) => {
     return state.userData.bookmarks;
   });
-  // console.log('bookmarksInside component', bookmarks);
 
   const foldersBookmark = useSelector((state: StoreState) => {
     return state.userData.folderData;
   }) as any[];
-  console.log('folderBookmark Inside list view', foldersBookmark);
+
   const toggle = foldersBookmark.length === 0;
 
   return !toggle ? (

@@ -17,21 +17,30 @@
   transform: rotate(90deg);
 }
 .tree-folder {
-  padding-left: 6%;
-  white-space: nowrap;
+  // padding-left: 6%;
+  // white-space: nowrap;
+  // margin-top: 3px; //ch
+  // margin-bottom: 3px; //ch
+  // width: 267px; //ch
+  // height: 35px; //ch
+  // padding: 8px 8px;//ch
   border-radius: 8px;
   width: 100%;
+  padding: 3px 3px;
   text-align: center;
   justify-content: center;
+  // .show-three-icon {
+  //   //ch
+  //   display: none; //ch
+  // }
 }
 .folder-name {
-  position: relative;
+  flex: 1;
+  text-align: left;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
   overflow: hidden;
-
-  max-width: 80px;
   left: 0;
   text-overflow: ellipsis;
 }
@@ -43,4 +52,8 @@
 }
 .tree-folder:hover {
   background-color: #f1f1f1;
+  // .show-three-icon {
+  //   //ch
+  //   display: block; //ch
+  // }
 }

@@ -4,8 +4,8 @@ a {
 }
 
 .Main-container {
-  padding-left: 5%;
-  padding-right: 5%;
+  // padding-left: 5%;
+  // padding-right: 5%;
 }
 .sidebar-container {
   display: flex;
@@ -15,7 +15,7 @@ a {
   background-color: #fafafb;
 }
 .Sidebar-head {
-  width: 15%;
+  width: 17%;
   padding-top: 2%;
   padding-bottom: 2%;
 }
@@ -23,6 +23,8 @@ a {
 .search-section {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 input:focus {
@@ -40,6 +42,7 @@ button:focus {
   outline: none;
 }
 .search-bar {
+  flex: 1;
   padding: 12px 12px;
   background-color: #f4f7fd;
   color: black;
@@ -48,6 +51,8 @@ button:focus {
   border: 1px solid #f4f7fd;
   border-radius: 10px;
   box-sizing: border-box;
+  max-width: 100%;
+  min-width: 100px;
 }
 
 .btn {
@@ -60,7 +65,7 @@ button:focus {
   border: 1px solid #f4f7fd;
   border-radius: 10px;
   box-sizing: border-box;
-  margin-left: -8px;
+  margin-left: 1px;
 }
 
 .sidebar {
@@ -99,6 +104,7 @@ button:focus {
   }
 }
 .Folder-layout {
+  padding-left: 10px;
   color: #7f7f7f;
   padding-bottom: 15px;
   overflow-x: auto;

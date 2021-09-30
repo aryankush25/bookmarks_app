@@ -3,11 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import spinner from '../../assets/images/spinner.gif';
-import threeIcon from '../../assets/images/threeIcon.png';
-import {
-  requestAccessBookmarkDefault,
-  requestDeleteBookmark
-} from '../../store/actions/userActions';
+
+import { requestAccessBookmarkDefault } from '../../store/actions/userActions';
 import StoreState from '../../store/utils/StoreTypes';
 import BookmarkMenu from '../BookmarkMenu';
 import './style.scss';
@@ -25,20 +22,11 @@ function BookmarkData() {
 
   const bookmarks = useSelector((state: StoreState) => {
     return state.userData.bookmarks;
-  });
-
-  // function deleteBookmark(index) {
-  //   console.log('clicked On delete bookmark', index);
-  //   return dispatch(requestDeleteBookmark(singleBookmark[index]));
-  // }
+  }) as any[]; //root
 
   const foldersBookmark = useSelector((state: StoreState) => {
-    // console.log('state', state);
-    // console.log('typeofState', typeof state.userData.folderData);
     return state.userData.folderData;
-  }) as any[]; //TypeCasting Here
-
-  // console.log('foldersBookmark', foldersBookmark);
+  }) as any[];
   const toggle = foldersBookmark.length === 0;
 
   const loader = useSelector(
@@ -62,7 +50,7 @@ function BookmarkData() {
                   <h3>{bookmark.description}</h3>
                 </div>
                 <div className=" bookmark-menu">
-                  <BookmarkMenu bookmarks={bookmark} />
+                  <BookmarkMenu bookmark={bookmark} />
                 </div>
               </div>
             </div>
@@ -79,7 +67,7 @@ function BookmarkData() {
                   <h3>{bookmark.description}</h3>
                 </div>
                 <div className=" bookmark-menu">
-                  <BookmarkMenu bookmarks={bookmarks} />
+                  <BookmarkMenu bookmark={bookmark} />
                 </div>
               </div>
             </div>

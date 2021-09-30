@@ -1,6 +1,7 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
 .searching-bookmark {
+  padding: 5px 45px;
   .input-icon {
     position: absolute;
     left: 3px;
@@ -38,13 +39,18 @@
     padding-top: 15px;
     padding-bottom: 14px;
   }
-
+  .addLink-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
   .add-link {
     border-radius: 30px;
     border: 1px solid #6a87e6;
     background-color: white;
     padding: 1px 17px;
-    margin-left: 550px;
+    margin-left: auto;
     height: 38px;
     width: 142px;
     margin-top: 10px;
@@ -89,6 +95,7 @@
     height: 38px;
     width: 94px;
     margin-top: 10px;
+    margin-right: 12px;
     text-align: center;
   }
 
@@ -101,6 +108,7 @@
     height: 38px;
     width: 94px;
     margin-top: 10px;
+    margin-right: 12px;
     text-align: center;
     background-color: #6a87e6;
   }

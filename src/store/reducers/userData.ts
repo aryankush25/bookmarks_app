@@ -21,7 +21,8 @@ const initialState: UserDataReducerTypes = {
   bookmarks: [],
   node: {},
   folderData: [],
-  folderId: ''
+  folderId: '',
+  rename: ''
 };
 
 function userData(state = initialState, action: ActionType) {
@@ -48,7 +49,6 @@ function userData(state = initialState, action: ActionType) {
       };
     }
     case actionTypes.CREATE_BOOKMARK_REQUEST: {
-      console.log('payload State', payload);
       return {
         ...state,
         userData: payload,
@@ -69,6 +69,26 @@ function userData(state = initialState, action: ActionType) {
         loginSpinner: false
       };
     }
+
+    case actionTypes.EDIT_BOOKMARK_REQUEST: {
+      return {
+        ...state,
+        userData: payload
+      };
+    }
+
+    case actionTypes.EDIT_BOOKMARK_SUCCESS: {
+      return {
+        ...state
+      };
+    }
+
+    case actionTypes.EDIT_BOOKMARK_FAILURE: {
+      return {
+        ...state
+      };
+    }
+
     case actionTypes.CREATE_FOLDER_REQUEST: {
       return {
         ...state,
@@ -111,15 +131,13 @@ function userData(state = initialState, action: ActionType) {
 
     case actionTypes.CREATE_RENAME_REQUEST: {
       return {
-        ...state,
-        userData: payload
+        ...state
       };
     }
 
     case actionTypes.CREATE_RENAME_SUCCESS: {
       return {
-        ...state,
-        rename: action.payload
+        ...state
       };
     }
 

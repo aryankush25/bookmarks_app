@@ -1,16 +1,20 @@
-import folderImg from '../../assets/images/folder@3x.png';
-import dropdown from '../../assets/images/right-arrow-black-triangle copy@3x.png';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   requestAccessChildfolder,
   requestAccessFolder,
   requestAccessFolderData
 } from '../../store/actions/userActions';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useState, useEffect } from 'react';
-import './style.scss';
-
 import StoreState from '../../store/utils/StoreTypes';
-import FolderMenu from '../FolderMenu';
+
+import './styles.scss';
+import folderImg from '../../assets/images/folder@3x.png';
+import dropdown from '../../assets/images/right-arrow-black-triangle copy@3x.png';
+import edit from '../../assets/images/penedit@2x.png';
+import trash from '../../assets/images/trash@2x.png';
+import addIcon from '../../assets/images/add.png';
+import whiteFolder from '../../assets/images/folder@2x.png';
 
 const Tree = ({ folders, nodeData }) => {
   return (
@@ -25,6 +29,7 @@ const Tree = ({ folders, nodeData }) => {
 
 const TreeNode = ({ node, nodeData }) => {
   const [childVisible, setChildVisiblity] = useState(false);
+  const [changeColor, setChangeColor] = useState(false);
   const loader = useSelector(
     (state: StoreState) => state.userData.folderSpinner
   );
@@ -38,14 +43,7 @@ const TreeNode = ({ node, nodeData }) => {
     return dispatch(requestAccessFolderData(node.id));
   }
 
-  const children = nodeData[node.id]; //folderId
-
-  // const result = folders.map((parent) => ({
-  //   // Spread properties of the parent
-  //   ...parent,
-
-  //   children: child[parent.id]
-  // }));
+  const children = nodeData[node.id];
 
   const hasChild = node.id ? true : false;
 
@@ -56,7 +54,7 @@ const TreeNode = ({ node, nodeData }) => {
         maxWidth: '210px',
         margin: '4px 8px'
       }}>
-      <div onClick={dispatchBookmark} className="tree-folder">
+      <div className="tree-folder-inside-modal">
         <div onClick={(e) => setChildVisiblity((v) => !v)}>
           {hasChild && (
             <div
@@ -72,17 +70,50 @@ const TreeNode = ({ node, nodeData }) => {
                 onClick={handleClick}
                 src={dropdown}
                 alt=""></img>
-              <img className="folder-icon" src={folderImg} alt=""></img>
-              <div className="folder-name">{node.name}</div>
-              <div className="show-three-icon">
-                <FolderMenu folders={node} />
+              <div
+                onClick={() => setChangeColor(true)}
+                className={
+                  changeColor ? 'folder-content-change' : 'folder-content'
+                }>
+                <img
+                  className="folder-icon"
+                  src={changeColor ? whiteFolder : folderImg}
+                  alt=""></img>
+                <div className="folder-name">{node.name}</div>
+                <div className="show-icon">
+                  <img className="add-icon" src={addIcon} alt=""></img>
+                  <img className="edit-icon" src={edit} alt=""></img>
+                  <img className="trash-icon" src={trash} alt=""></img>
+                </div>
               </div>
             </div>
           )}
           {!hasChild && (
             <div className="inside-folder">
-              <img className="folder-icon" src={folderImg} alt=""></img>
-              <div className="folder-name">{node.name}</div>
+              <div className="folder-content">
+                <img
+                  className="folder-icon"
+                  src={changeColor ? whiteFolder : folderImg}
+                  alt=""></img>
+                <div className="folder-name">{node.name}</div>
+                <div className="show-icon">
+                  <img
+                    // style={{ paddingRight: '6px', paddingLeft: '4px' }}
+                    className="add-icon"
+                    src={addIcon}
+                    alt=""></img>
+                  <img
+                    // style={{ paddingRight: '6px', paddingLeft: '4px' }}
+                    className="edit-icon"
+                    src={edit}
+                    alt=""></img>
+                  <img
+                    // style={{ paddingRight: '6px', paddingLeft: '4px' }}
+                    className="trash-icon"
+                    src={trash}
+                    alt=""></img>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -90,9 +121,6 @@ const TreeNode = ({ node, nodeData }) => {
         {hasChild && childVisible && children && (
           <div>
             <Tree folders={children} nodeData={nodeData} />
-            <div className="show-three-icon">
-              <FolderMenu folders={node} />
-            </div>
           </div>
         )}
 
@@ -109,7 +137,7 @@ const TreeNode = ({ node, nodeData }) => {
   );
 };
 
-const FolderChart = () => {
+function DisplayFolder() {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -122,7 +150,8 @@ const FolderChart = () => {
   const nodeData = useSelector((state: StoreState) => {
     return state.userData.node;
   });
-  console.log('nodeData', nodeData);
+
   return <Tree folders={folders} nodeData={nodeData} />;
-};
-export default FolderChart;
+}
+
+export default DisplayFolder;

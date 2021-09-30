@@ -15,6 +15,7 @@ export interface UserDataReducerTypes {
   node: {};
   folderData: any[];
   folderId: string;
+  rename: string;
 }
 
 export default interface StoreState {

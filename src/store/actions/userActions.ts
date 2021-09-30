@@ -27,6 +27,33 @@ export const requestCreateBookmarkFailure = () => {
   };
 };
 
+export const requestEditBookmark = (
+  bookmarkId: string,
+  name: string,
+  url: string
+) => {
+  return {
+    type: actionTypes.EDIT_BOOKMARK_REQUEST,
+    payload: { bookmarkId, name, url }
+  };
+};
+
+export const requestEditBookmarkSuccess = (url) => {
+  return {
+    type: actionTypes.EDIT_BOOKMARK_SUCCESS,
+    payload: {
+      url
+    }
+  };
+};
+
+export const requestEditBookmarkFailure = () => {
+  return {
+    type: actionTypes.EDIT_BOOKMARK_FAILURE,
+    payload: {}
+  };
+};
+
 export const requestDeleteBookmark = (bookmarkId: string) => {
   return {
     type: actionTypes.DELETE_BOOKMARK_REQUEST,
@@ -90,17 +117,17 @@ export const requestAddSubFolderFailure = () => {
   };
 };
 
-export const requestRenameFolder = (name: string, folderId: string) => {
+export const requestRenameFolder = (folderId: string, name: string) => {
   return {
     type: actionTypes.CREATE_RENAME_REQUEST,
-    payload: { name, folderId }
+    payload: { folderId, name }
   };
 };
 
-export const requestRenameFolderSuccess = (name: string, folderId: string) => {
+export const requestRenameFolderSuccess = (name) => {
   return {
     type: actionTypes.CREATE_RENAME_SUCCESS,
-    payload: { name, folderId }
+    payload: { name }
   };
 };
 
@@ -157,10 +184,9 @@ export const requestAccessBookmarkDefault = () => {
   };
 };
 
-export const requestAccessBookmark = (id) => {
+export const requestAccessBookmark = () => {
   return {
-    type: actionTypes.ACCESS_FOLDERDATA_REQUEST,
-    payload: { id }
+    type: actionTypes.ACCESS_BOOKMARKS_REQUEST
   };
 };
 
@@ -188,7 +214,6 @@ export const requestAccessChildfolderSuccess = (node: {
   node: any;
   folderId: String;
 }) => {
-  // console.log('insideNode', node);
   return {
     type: actionTypes.ACCESS_CHILDFOLDER_SUCCESS,
     payload: { node: node.node, folderId: node.folderId }
