@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   requestAccessChildfolder,
   requestAccessFolder,
-  requestAccessFolderData
+  requestDeleteFolder,
+  requestRenameFolder
 } from '../../store/actions/userActions';
 import StoreState from '../../store/utils/StoreTypes';
 
@@ -29,18 +30,51 @@ const Tree = ({ folders, nodeData }) => {
 
 const TreeNode = ({ node, nodeData }) => {
   const [childVisible, setChildVisiblity] = useState(false);
+  const [folderState, setFolderState] = useState(false);
   const [changeColor, setChangeColor] = useState(false);
+  const [editName, setEditName] = useState(false);
+  const [newName, setNewName] = useState('');
+
   const loader = useSelector(
     (state: StoreState) => state.userData.folderSpinner
   );
+
+  const currentFolder = useSelector(
+    (state: StoreState) => state.userData.userData
+  ) as any;
 
   const dispatch = useDispatch();
   function handleClick() {
     return dispatch(requestAccessChildfolder({ id: node['id'] }));
   }
 
-  function dispatchBookmark() {
-    return dispatch(requestAccessFolderData(node.id));
+  function deleteFolder() {
+    return dispatch(requestDeleteFolder(node.id));
+  }
+
+  function onItemClick() {
+    setFolderState(node.id);
+  }
+
+  function handleEdit(e) {
+    // e.preventDefault();
+    // dispatch(requestRenameFolder(node.id, newName))
+    setEditName(true);
+  }
+  function handleChange(e) {
+    setNewName(e.target.value);
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      return handleSubmit(event);
+    }
+  };
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    return dispatch(requestRenameFolder(node.id, newName));
   }
 
   const children = nodeData[node.id];
@@ -69,21 +103,43 @@ const TreeNode = ({ node, nodeData }) => {
                 className="dropdown-icon"
                 onClick={handleClick}
                 src={dropdown}
-                alt=""></img>
+                alt="not-found"></img>
               <div
-                onClick={() => setChangeColor(true)}
+                onClick={() => onItemClick}
                 className={
-                  changeColor ? 'folder-content-change' : 'folder-content'
+                  currentFolder?.id == node.id
+                    ? 'folder-content-change'
+                    : 'folder-content'
                 }>
                 <img
                   className="folder-icon"
                   src={changeColor ? whiteFolder : folderImg}
-                  alt=""></img>
-                <div className="folder-name">{node.name}</div>
+                  alt="not-found"></img>
+                <div
+                  className={editName ? 'folder-name-selected' : 'folder-name'}>
+                  {editName ? (
+                    <input
+                      type="text"
+                      onKeyDown={handleKeyDown}
+                      defaultValue={node.name}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    node.name
+                  )}
+                </div>
                 <div className="show-icon">
                   <img className="add-icon" src={addIcon} alt=""></img>
-                  <img className="edit-icon" src={edit} alt=""></img>
-                  <img className="trash-icon" src={trash} alt=""></img>
+                  <img
+                    className="edit-icon"
+                    onClick={handleEdit}
+                    src={edit}
+                    alt=""></img>
+                  <img
+                    className="trash-icon"
+                    onClick={deleteFolder}
+                    src={trash}
+                    alt="not-found"></img>
                 </div>
               </div>
             </div>
@@ -95,23 +151,31 @@ const TreeNode = ({ node, nodeData }) => {
                   className="folder-icon"
                   src={changeColor ? whiteFolder : folderImg}
                   alt=""></img>
-                <div className="folder-name">{node.name}</div>
+                <div className="folder-name">
+                  {editName ? (
+                    <input
+                      className="edit-name"
+                      type="text"
+                      onKeyDown={handleKeyDown}
+                      defaultValue={node.name}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    node.name
+                  )}
+                </div>
                 <div className="show-icon">
+                  <img className="add-icon" src={addIcon} alt="not-found"></img>
                   <img
-                    // style={{ paddingRight: '6px', paddingLeft: '4px' }}
-                    className="add-icon"
-                    src={addIcon}
-                    alt=""></img>
-                  <img
-                    // style={{ paddingRight: '6px', paddingLeft: '4px' }}
                     className="edit-icon"
+                    onClick={handleEdit}
                     src={edit}
-                    alt=""></img>
+                    alt="not-found"></img>
                   <img
-                    // style={{ paddingRight: '6px', paddingLeft: '4px' }}
                     className="trash-icon"
+                    onClick={deleteFolder}
                     src={trash}
-                    alt=""></img>
+                    alt="not-found"></img>
                 </div>
               </div>
             </div>
@@ -119,7 +183,7 @@ const TreeNode = ({ node, nodeData }) => {
         </div>
 
         {hasChild && childVisible && children && (
-          <div>
+          <div className="child-folder">
             <Tree folders={children} nodeData={nodeData} />
           </div>
         )}

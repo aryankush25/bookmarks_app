@@ -83,8 +83,8 @@ const Home = () => {
                   },
                   content: {
                     color: 'black',
-                    height: '24%',
-                    width: '20%',
+                    height: '300px',
+                    width: '350px',
                     margin: 'auto',
                     borderRadius: '20px',
                     paddingLeft: '25px',

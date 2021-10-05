@@ -96,17 +96,17 @@ export const requestCreateFolderFailure = () => {
 };
 
 //Add sub-folder
-export const requestAddSubFolder = (name: string, parentId: string) => {
+export const requestAddSubFolder = (parentId: string, name: string) => {
   return {
     type: actionTypes.CREATE_SUBFOLDER_REQUEST,
-    payload: { name, parentId }
+    payload: { parentId, name }
   };
 };
 
-export const requestAddSubFolderSuccess = (name: string, parentId: string) => {
+export const requestAddSubFolderSuccess = (parentId: string, name: string) => {
   return {
     type: actionTypes.CREATE_SUBFOLDER_SUCCESS,
-    payload: { name, parentId }
+    payload: { parentId, name }
   };
 };
 

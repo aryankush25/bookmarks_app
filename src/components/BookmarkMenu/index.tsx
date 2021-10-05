@@ -28,7 +28,7 @@ export default function BookmarkMenu({ bookmark }) {
   }
   function handleSubmit(event) {
     event.preventDefault();
-    console.log('new name', newUrl);
+
     dispatch(requestEditBookmark(bookmark.id, newName, newUrl));
     setNewName('');
     setNewUrl('');
@@ -62,8 +62,8 @@ export default function BookmarkMenu({ bookmark }) {
             },
             content: {
               color: 'black',
-              height: '24%',
-              width: '20%',
+              height: '300px',
+              width: '400px',
               margin: 'auto',
               borderRadius: '20px',
               paddingLeft: '25px',
@@ -174,12 +174,6 @@ function DropdownMenu(props) {
   function close() {
     return setActive(false);
   }
-
-  // const box = document.querySelector(".card");
-  // document.addEventListener('click', function (event) {
-  //   if (event.target.closest(".card")) return
-  //   box.classList.add('js-js-hidden');
-  // })
 
   const items = props.items;
 

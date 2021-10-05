@@ -29,7 +29,8 @@ import {
   requestRenameFolderSuccess,
   requestRenameFolderFailure,
   requestEditBookmarkSuccess,
-  requestEditBookmarkFailure
+  requestEditBookmarkFailure,
+  requestAccessChildfolder
 } from '../actions/userActions';
 import {
   setLocalStorageTokens,
@@ -40,6 +41,7 @@ import { navigateTo } from '../../utils/history';
 // import { result } from 'lodash';
 import * as ApiService from '../../services/apiService';
 import { act } from '@testing-library/react';
+import { result } from 'lodash';
 // import { act } from '@testing-library/react';
 interface FetchUserActionType {
   type: String;
@@ -232,7 +234,6 @@ const renameFolder = (raw) => {
 };
 
 export function* renamefolder(action: RenameFolderAction) {
-  console.log('rename-folder', action.payload);
   try {
     var raw = action.payload;
 
@@ -261,7 +262,8 @@ export function* createsubfolder(action: CreateSubFolderAction) {
 
     const result1 = yield createSubFolder(raw);
 
-    // yield put(requestAddSubFolderSuccess(result1));
+    yield put(requestAddSubFolderSuccess(result1.name, result1));
+    yield put(requestAccessFolder());
   } catch (error) {
     console.log(error);
     yield put(requestAddSubFolderFailure());
@@ -332,12 +334,11 @@ const editBookmark = (raw) => {
 };
 
 export function* editbookmark(action: EditBookmarkAction) {
-  console.log('Edit-Bookmark', action.payload);
   try {
     var raw = action.payload;
 
     const result1 = yield editBookmark(raw);
-    console.log('result', result1);
+
     // yield put(requestEditBookmarkSuccess(result1));
     yield put(requestAccessBookmark());
   } catch (error) {
@@ -380,13 +381,18 @@ const getchildFolders = (id) => {
 };
 
 export function* getchildfolder(action: getChildfolder) {
-  console.log('inside saga', action.payload);
   try {
     var raw = JSON.stringify(action.payload);
 
     const result1 = yield getchildFolders(action.payload.id);
+    delete result1.responseStatus;
 
-    yield put(requestAccessChildfolderSuccess(result1));
+    yield put(
+      requestAccessChildfolderSuccess({
+        folderId: action.payload.id,
+        node: result1
+      })
+    );
   } catch (error) {
     console.log(error);
     yield put(requestAccessChildfolderFailure());

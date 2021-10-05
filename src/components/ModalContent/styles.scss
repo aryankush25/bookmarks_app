@@ -1,5 +1,6 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 .folder-within-modal {
+  overflow-y: auto;
   .folder-icon {
     width: 17px;
     height: 12px;
@@ -19,14 +20,26 @@
   .tree-folder-inside-modal {
     // padding-left: 6%;
     // white-space: nowrap;
-    padding: 8px 8px;
+    //  padding: 8px 8px;
     border-radius: 8px;
-    margin-top: 12px;
+    /* margin-top: 12px; */
     width: 267px;
-    height: 35px;
-    padding: 3px 3px;
+    /* height: 35px; */
+    /* padding: 3px 3px; */
     text-align: center;
     justify-content: center;
+  }
+  .child-folder {
+    // padding: 8px 8px;
+    border-radius: 8px;
+
+    width: inherit;
+    height: auto;
+    padding: 3px 3px;
+    text-align: center;
+
+    justify-content: center;
+    // background-color: coral;
   }
   .folder-name {
     flex: 1;
@@ -38,7 +51,30 @@
     left: 0;
     text-overflow: ellipsis;
   }
+  .folder-name-selected {
+    flex: 1;
+    text-align: left;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    left: 0;
+    text-overflow: ellipsis;
+    border-bottom: 2px solid #6a8ae6;
+  }
 
+  textarea:focus,
+  input:focus {
+    border: none;
+    background-color: white;
+  }
+  input:hover {
+    background-color: white;
+  }
+  input:not(:focus) {
+    border: none;
+    background-color: white;
+  }
   .folder-content-change {
     background-color: #6a8ae6;
     color: white;
@@ -71,7 +107,7 @@
     }
   }
   .folder-content:hover {
-    background-color: #dee1e8;
+    background-color: white;
     // color: white;
     .show-icon {
       display: flex;
@@ -113,7 +149,7 @@
       }
     }
     .folder-content:hover {
-      background-color: #dee1e8;
+      background-color: white;
       // color: #6A8AE6;
       .show-icon {
         display: flex;

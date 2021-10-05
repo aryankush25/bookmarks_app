@@ -1,4 +1,4 @@
-import { divide, indexOf } from 'lodash';
+// import { divide, indexOf } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,13 +10,9 @@ import BookmarkMenu from '../BookmarkMenu';
 import './style.scss';
 
 function BookmarkData() {
-  const [loading, setLoading] = useState(true);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(false);
-
     dispatch(requestAccessBookmarkDefault());
   }, []);
 
@@ -28,6 +24,11 @@ function BookmarkData() {
     return state.userData.folderData;
   }) as any[];
   const toggle = foldersBookmark.length === 0;
+
+  const folder = useSelector((state: StoreState) => {
+    return state.userData.userData;
+  });
+  console.log('folder', folder);
 
   const loader = useSelector(
     (state: StoreState) => state.userData.bookmarkLoader

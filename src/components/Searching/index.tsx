@@ -100,7 +100,7 @@ function Searching({ view, setView }) {
           </div>
         </Modal>
         <button onClick={() => setshowModal(true)} className="add-link">
-          <img src={img2} alt="Not"></img>
+          <img className="img" src={img2} alt="Not"></img>
         </button>
 
         <button className={buttonState1 ? 'gridview-true' : 'grid-view'}>

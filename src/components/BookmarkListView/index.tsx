@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
   requestAccessBookmarkDefault,
-  requestDeleteBookmark
+  requestDeleteBookmark,
+  requestEditBookmark
 } from '../../store/actions/userActions';
 
 import './styles.scss';
@@ -30,6 +30,14 @@ function BookmarkListView() {
   const foldersBookmark = useSelector((state: StoreState) => {
     return state.userData.folderData;
   }) as any[];
+
+  function handleDelete(id) {
+    dispatch(requestDeleteBookmark(id));
+  }
+
+  function handleEdit() {
+    dispatch(requestEditBookmark);
+  }
 
   const toggle = foldersBookmark.length === 0;
 
@@ -83,8 +91,12 @@ function BookmarkListView() {
           <div className="bookmark-icons">
             <img src={fav} alt="Not-found" />
             <img src={copy} alt="Not-found" />
-            <img src={pen} alt="Not-found" />
-            <img src={deleteIcon} alt="Not-found" />
+            <img src={pen} onClick={handleEdit} alt="Not-found" />
+            <img
+              src={deleteIcon}
+              onClick={() => handleDelete(1)}
+              alt="Not-found"
+            />
           </div>
         </div>
       ))}
@@ -139,8 +151,12 @@ function BookmarkListView() {
           <div className="bookmark-icons">
             <img src={fav} alt="Not-found" />
             <img src={copy} alt="Not-found" />
-            <img src={pen} alt="Not-found" />
-            <img src={deleteIcon} alt="Not-found" />
+            <img src={pen} onClick={() => handleEdit()} alt="Not-found" />
+            <img
+              src={deleteIcon}
+              onClick={() => handleDelete(bookmark.id)}
+              alt="Not-found"
+            />
           </div>
         </div>
       ))}

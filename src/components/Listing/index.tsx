@@ -13,6 +13,15 @@ import StoreState from '../../store/utils/StoreTypes';
 import FolderMenu from '../FolderMenu';
 
 const Tree = ({ folders, nodeData }) => {
+  // const [folderState, setFolderState] = useState({
+  //   activeItem: 0,
+  //   items: folders
+  // });
+
+  // function onItemClick (id){
+  //   // setFolderState({ activeItem: id });
+  // };
+
   return (
     <div>
       {folders.map((folder) => {
@@ -25,9 +34,15 @@ const Tree = ({ folders, nodeData }) => {
 
 const TreeNode = ({ node, nodeData }) => {
   const [childVisible, setChildVisiblity] = useState(false);
+  const [folderState, setFolderState] = useState(false);
+
   const loader = useSelector(
     (state: StoreState) => state.userData.folderSpinner
   );
+
+  const currentFolder = useSelector(
+    (state: StoreState) => state.userData.userData
+  ) as any;
 
   const dispatch = useDispatch();
   function handleClick() {
@@ -39,13 +54,17 @@ const TreeNode = ({ node, nodeData }) => {
   }
 
   const children = nodeData[node.id]; //folderId
-
+  // console.log('children', children);
   // const result = folders.map((parent) => ({
   //   // Spread properties of the parent
   //   ...parent,
 
   //   children: child[parent.id]
   // }));
+
+  function onItemClick() {
+    setFolderState(node.id);
+  }
 
   const hasChild = node.id ? true : false;
 
@@ -56,14 +75,18 @@ const TreeNode = ({ node, nodeData }) => {
         maxWidth: '210px',
         margin: '4px 8px'
       }}>
-      <div onClick={dispatchBookmark} className="tree-folder">
-        <div onClick={(e) => setChildVisiblity((v) => !v)}>
+      <div onClick={onItemClick} className="tree-folder">
+        <div
+          // className={
+          //   currentFolder?.id === node.id ? 'tree-folder-selected' : null
+          // }
+          onClick={(e) => setChildVisiblity((v) => !v)}>
           {hasChild && (
             <div
               style={{
                 display: 'flex',
-                position: 'relative',
-                width: '100%',
+                // position: 'relative',
+                // width: '100%',
                 alignItems: 'center'
               }}
               className={`${childVisible ? 'active' : ''}`}>
@@ -72,27 +95,38 @@ const TreeNode = ({ node, nodeData }) => {
                 onClick={handleClick}
                 src={dropdown}
                 alt=""></img>
-              <img className="folder-icon" src={folderImg} alt=""></img>
-              <div className="folder-name">{node.name}</div>
-              <div className="show-three-icon">
-                <FolderMenu folders={node} />
+              <div
+                className={
+                  currentFolder?.id === node.id
+                    ? ' folder-selected'
+                    : 'display-folder-content'
+                }>
+                <img className="folder-icon" src={folderImg} alt=""></img>
+                <div onClick={dispatchBookmark} className="folder-name">
+                  {node.name}
+                </div>
+                <div className="show-three-icon">
+                  <FolderMenu folders={node} />
+                </div>
               </div>
             </div>
           )}
           {!hasChild && (
             <div className="inside-folder">
               <img className="folder-icon" src={folderImg} alt=""></img>
-              <div className="folder-name">{node.name}</div>
+              <div onClick={dispatchBookmark} className="folder-name">
+                {node.name}
+              </div>
+              <div className="show-three-icon">
+                <FolderMenu folders={node} />
+              </div>
             </div>
           )}
         </div>
 
         {hasChild && childVisible && children && (
-          <div>
+          <div className="child-folder">
             <Tree folders={children} nodeData={nodeData} />
-            <div className="show-three-icon">
-              <FolderMenu folders={node} />
-            </div>
           </div>
         )}
 
@@ -122,7 +156,7 @@ const FolderChart = () => {
   const nodeData = useSelector((state: StoreState) => {
     return state.userData.node;
   });
-  console.log('nodeData', nodeData);
+
   return <Tree folders={folders} nodeData={nodeData} />;
 };
 export default FolderChart;

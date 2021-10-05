@@ -24,16 +24,71 @@
   // width: 267px; //ch
   // height: 35px; //ch
   // padding: 8px 8px;//ch
-  border-radius: 8px;
-  width: 100%;
-  padding: 3px 3px;
-  text-align: center;
-  justify-content: center;
-  // .show-three-icon {
-  //   //ch
-  //   display: none; //ch
-  // }
+  // border-radius: 8px;
+  // width: 100%;
+  // padding: 3px 3px;
+  // text-align: center;
+  // justify-content: center;
+  // // .show-three-icon {
+  // //   //ch
+  // //   display: none; //ch
+  // // }
+  .display-folder-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 8px;
+    width: 100%;
+    padding: 3px 3px;
+  }
+  .display-folder-content:hover {
+    background-color: #f1f1f1;
+  }
+
+  .folder-selected {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    // color: white;
+    background-color: #5f8fe3;
+    border-radius: 8px;
+    position: relative;
+    width: 100%;
+    padding: 3px 3px;
+    .folder-name {
+      color: white;
+    }
+  }
+  .child-folder {
+    border-radius: 8px;
+    width: inherit;
+    height: auto;
+    padding: 3px 3px;
+    text-align: center;
+    justify-content: center;
+  }
 }
+// .tree-folder-selected {
+//   // border-radius: 8px;
+//   // width: 100%;
+//   // padding: 3px 3px;
+//   // text-align: center;
+//   // justify-content: center;
+//   // background-color: #5f8fe3;
+//   // color: white;
+//   .child-folder {
+//     border-radius: 8px;
+//     // width: inherit;
+//     height: auto;
+//     padding: 3px 3px;
+//     text-align: center;
+//     justify-content: center;
+//   }
+// }
+
 .folder-name {
   flex: 1;
   text-align: left;
@@ -44,16 +99,22 @@
   left: 0;
   text-overflow: ellipsis;
 }
+
 .inside-folder {
   display: flex;
   position: relative;
   align-items: center;
   padding-right: 0;
 }
-.tree-folder:hover {
-  background-color: #f1f1f1;
-  // .show-three-icon {
-  //   //ch
-  //   display: block; //ch
-  // }
-}
+// .tree-folder:hover {
+//   background-color: #f1f1f1;
+
+// .show-three-icon {
+//   //ch
+//   display: block; //ch
+// }
+// }
+// .tree-folder:active {
+//   background-color: #5f8fe3;
+//   color: white;
+// }
