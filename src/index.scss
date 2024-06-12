@@ -1,6 +1,8 @@
 @import './assets/styles/fonts.scss';
+
 body {
   margin: 0;
+  font-family: $primary-font-family;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: $primary-font-family;
