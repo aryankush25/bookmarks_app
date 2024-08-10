@@ -19,7 +19,7 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid, touchedFields, dirtyFields }
+    formState: { errors, isValid, dirtyFields } // touchedFields,
   } = useForm<Inputs>({
     mode: 'onChange'
   });

@@ -131,6 +131,7 @@ function getBaseApiEndPoint() {
 }
 
 async function handleNetworkCall(apiObject) {
+  console.log('apiObject', apiObject);
   const fetchObject: RequestInit = {};
   let body = {};
   fetchObject.method = apiObject.method ? apiObject.method : 'GET';
@@ -164,7 +165,8 @@ async function handleNetworkCall(apiObject) {
   if (isAuthenticationRequired) {
     if (isNilOrEmpty(fetchObject.headers.authorization)) {
       const { accessToken } = getLocalStorageTokens();
-      fetchObject.headers.authorization = `BEARER ${accessToken}`;
+      console.log('accessToken', accessToken);
+      fetchObject.headers.authorization = `Bearer ${accessToken}`;
     }
   }
 

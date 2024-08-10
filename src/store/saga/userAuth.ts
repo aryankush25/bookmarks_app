@@ -1,11 +1,36 @@
-import { takeLatest, delay, put } from 'redux-saga/effects';
+import { takeLatest, takeEvery, delay, put, call } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import actionTypes from '../actionTypes';
 import {
   requestUserSuccess,
   requestUserFailure,
   requestUserSignupSuccess,
-  requestUserSignupFailure
+  requestUserSignupFailure,
+  requestCreateFolderSuccess,
+  requestCreateFolderFailure,
+  requestAccessFolder,
+  requestAccessFolderSuccess,
+  requestAccessFolderFailure,
+  requestAccessBookmark,
+  requestAccessBookmarkFailure,
+  requestAccessBookmarkSuccess,
+  requestAccessChildfolderSuccess,
+  requestAccessChildfolderFailure,
+  requestCreateBookmarkSuccess,
+  requestCreateBookmarkFailure,
+  requestAccessFolderDataSuccess,
+  requestAccessFolderDataFailure,
+  requestDeleteBookmarkSuccess,
+  requestDeleteBookmarkFailure,
+  requestDeleteFolderSuccess,
+  requestDeleteFolderFailure,
+  requestAddSubFolderSuccess,
+  requestAddSubFolderFailure,
+  requestRenameFolderSuccess,
+  requestRenameFolderFailure,
+  requestEditBookmarkSuccess,
+  requestEditBookmarkFailure,
+  requestAccessChildfolder
 } from '../actions/userActions';
 import {
   setLocalStorageTokens,
@@ -13,9 +38,11 @@ import {
 } from '../../utils/tokensHelper';
 import { HOME_ROUTE, LOGIN_ROUTE } from '../../utils/routesConstants';
 import { navigateTo } from '../../utils/history';
-import { result } from 'lodash';
+// import { result } from 'lodash';
 import * as ApiService from '../../services/apiService';
 import { act } from '@testing-library/react';
+import { result } from 'lodash';
+// import { act } from '@testing-library/react';
 interface FetchUserActionType {
   type: String;
   payload: {
@@ -31,6 +58,84 @@ interface SingupUserAction {
     email: string;
     password: string;
   };
+}
+
+interface CreateFolderAction {
+  type: String;
+  payload: {
+    name: string;
+  };
+}
+
+interface CreateSubFolderAction {
+  type: String;
+  payload: {
+    name: string;
+    parentId: string;
+  };
+}
+
+interface RenameFolderAction {
+  type: String;
+  payload: {
+    folderId: string;
+    name: string;
+  };
+}
+
+interface CreateBookmarkAction {
+  type: String;
+  payload: {
+    url: string;
+    folderId: {
+      value: string;
+      label: string;
+    };
+  };
+}
+
+interface getFolders {
+  type: String;
+  payload: {};
+}
+
+interface getFolderdatas {
+  type: string;
+  payload: {
+    id: string | undefined;
+  };
+}
+interface getChildfolder {
+  type: string;
+  payload: {
+    id: string | undefined;
+  };
+}
+interface EditBookmarkAction {
+  type: string;
+  payload: {
+    bookmarkId: string;
+    name: string;
+    url: string;
+  };
+}
+interface deleteBookmarks {
+  type: string;
+  payload: {
+    bookmarkId: string | undefined;
+  };
+}
+
+interface deleteFolder {
+  type: string;
+  payload: {
+    folderId: string | undefined;
+  };
+}
+
+interface getBookmarks {
+  type: String;
+  payload: {};
 }
 
 const fetchuserloginData = (raw) => {
@@ -93,6 +198,283 @@ function* signup(action: SingupUserAction) {
   }
 }
 
+const createFolder = (raw) => {
+  const APIObj = {
+    endPoint: '/folder',
+    authenticationRequired: true,
+    method: 'POST',
+    body: raw
+  };
+
+  return ApiService.callApi(APIObj);
+};
+export function* createfolder(action: CreateFolderAction) {
+  try {
+    var raw = JSON.stringify(action.payload);
+
+    const result1 = yield createFolder(raw);
+
+    yield put(requestCreateFolderSuccess(result1));
+    yield put(requestAccessFolder());
+  } catch (error) {
+    console.log(error);
+    yield put(requestCreateFolderFailure());
+  }
+}
+
+const renameFolder = (raw) => {
+  const APIObj = {
+    endPoint: '/rename-folder',
+    authenticationRequired: true,
+    method: 'PUT',
+    body: JSON.stringify(raw)
+  };
+
+  return ApiService.callApi(APIObj);
+};
+
+export function* renamefolder(action: RenameFolderAction) {
+  try {
+    var raw = action.payload;
+
+    const result1 = yield renameFolder(raw);
+    console.log('result', result1);
+    yield put(requestRenameFolderSuccess(result1));
+    yield put(requestAccessFolder());
+  } catch (error) {
+    console.log(error);
+    yield put(requestRenameFolderFailure());
+  }
+}
+
+const createSubFolder = (raw) => {
+  const APIObj = {
+    endPoint: '/folder',
+    authenticationRequired: true,
+    method: 'POST',
+    body: raw
+  };
+  return ApiService.callApi(APIObj);
+};
+export function* createsubfolder(action: CreateSubFolderAction) {
+  try {
+    var raw = JSON.stringify(action.payload);
+
+    const result1 = yield createSubFolder(raw);
+
+    yield put(requestAddSubFolderSuccess(result1.name, result1));
+    yield put(requestAccessFolder());
+  } catch (error) {
+    console.log(error);
+    yield put(requestAddSubFolderFailure());
+  }
+}
+
+const getBookmark = (raw) => {
+  const APIObj = {
+    endPoint: '/folder-bookmarks',
+    authenticationRequired: true,
+    method: 'GET',
+    body: raw
+  };
+
+  return ApiService.callApi(APIObj);
+};
+
+export function* getbookmark(action: getBookmarks) {
+  try {
+    var raw = JSON.stringify(action.payload);
+
+    const result1 = yield getBookmark(raw);
+
+    yield put(requestAccessBookmarkSuccess(result1));
+  } catch (error) {
+    console.log(error);
+    yield put(requestAccessBookmarkFailure());
+  }
+}
+
+const createBookmark = (raw) => {
+  const APIObj = {
+    endPoint: '/bookmark',
+    authenticationRequired: true,
+    method: 'POST',
+    body: raw
+  };
+
+  return ApiService.callApi(APIObj);
+};
+
+export function* createbookmark(action: CreateBookmarkAction) {
+  try {
+    var raw = JSON.stringify({
+      url: action.payload.url,
+      folderId: action.payload.folderId.value
+    });
+
+    const result1 = yield createBookmark(raw);
+
+    yield put(requestCreateBookmarkSuccess(result1.url, result1.folderId));
+    yield put(requestAccessBookmark());
+  } catch (error) {
+    console.log(error);
+    yield put(requestCreateBookmarkFailure());
+  }
+}
+
+const editBookmark = (raw) => {
+  const APIObj = {
+    endPoint: '/update-details',
+    authenticationRequired: true,
+    method: 'PUT',
+    body: JSON.stringify(raw)
+  };
+
+  return ApiService.callApi(APIObj);
+};
+
+export function* editbookmark(action: EditBookmarkAction) {
+  try {
+    var raw = action.payload;
+
+    const result1 = yield editBookmark(raw);
+
+    // yield put(requestEditBookmarkSuccess(result1));
+    yield put(requestAccessBookmark());
+  } catch (error) {
+    console.log(error);
+    yield put(requestEditBookmarkFailure());
+  }
+}
+
+const getallFolder = (raw) => {
+  const APIObj = {
+    endPoint: '/folders',
+    authenticationRequired: true,
+    method: 'GET',
+    body: raw
+  };
+
+  return ApiService.callApi(APIObj);
+};
+export function* getfolder(action: getFolders) {
+  try {
+    var raw = JSON.stringify(action.payload);
+
+    const result1 = yield getallFolder(raw);
+
+    yield put(requestAccessFolderSuccess(result1));
+  } catch (error) {
+    console.log(error);
+    yield put(requestAccessFolderFailure());
+  }
+}
+
+const getchildFolders = (id) => {
+  const APIObj = {
+    endPoint: `/folders?folderId=${id}`,
+    authenticationRequired: true,
+    method: 'GET'
+  };
+
+  return ApiService.callApi(APIObj);
+};
+
+export function* getchildfolder(action: getChildfolder) {
+  try {
+    var raw = JSON.stringify(action.payload);
+
+    const result1 = yield getchildFolders(action.payload.id);
+    delete result1.responseStatus;
+
+    yield put(
+      requestAccessChildfolderSuccess({
+        folderId: action.payload.id,
+        node: result1
+      })
+    );
+  } catch (error) {
+    console.log(error);
+    yield put(requestAccessChildfolderFailure());
+  }
+}
+
+const deleteBookmark = (raw) => {
+  const APIObj = {
+    endPoint: '/bookmark',
+    authenticationRequired: true,
+    method: 'DELETE',
+    body: JSON.stringify({ bookmarkId: raw }) //getting Json Object bcz of that converting into string.
+  };
+  return ApiService.callApi(APIObj);
+};
+
+export function* deletebookmarks(action: deleteBookmarks) {
+  try {
+    var raw = action.payload;
+
+    const result1 = yield deleteBookmark(raw);
+
+    yield put(requestDeleteBookmarkSuccess(result1));
+
+    yield put(requestAccessBookmark());
+  } catch (error) {
+    console.log(error);
+    yield put(requestDeleteBookmarkFailure());
+  }
+}
+
+const getFolderData = (id) => {
+  const APIObj = {
+    endPoint: `/folder-bookmarks?folderId=${id}`,
+    authenticationRequired: true,
+    method: 'GET'
+  };
+  return ApiService.callApi(APIObj);
+};
+
+export function* getFolderdata(action: getFolderdatas) {
+  try {
+    var raw = JSON.stringify(action.payload);
+
+    const result1 = yield getFolderData(action.payload.id);
+    delete result1.responseStatus;
+
+    yield put(
+      requestAccessFolderDataSuccess({
+        folderId: action.payload.id,
+        folderData: result1
+      })
+    );
+  } catch (error) {
+    console.log(error);
+    yield put(requestAccessFolderDataFailure());
+  }
+}
+
+const deleteFolder = (raw) => {
+  const APIObj = {
+    endPoint: '/folder',
+    authenticationRequired: true,
+    method: 'DELETE',
+    body: JSON.stringify({ folderId: raw }) //getting Json Object bcz of that converting into string.
+  };
+  return ApiService.callApi(APIObj);
+};
+
+export function* deletefolder(action: deleteFolder) {
+  try {
+    var raw = action.payload;
+
+    const result1 = yield deleteFolder(raw);
+
+    yield put(requestDeleteFolderSuccess(result1));
+    yield put(requestAccessFolder());
+  } catch (error) {
+    console.log(error);
+    yield put(requestDeleteFolderFailure());
+  }
+}
 export function* logout() {
   try {
     yield delay(1000); // This is to save multiple requests as saga offers debounce functionality out of the box
@@ -113,5 +495,16 @@ export function* logout() {
 export default [
   takeLatest(actionTypes.USER_REQUEST, fetchUserAsync),
   takeLatest(actionTypes.LOGOUT, logout),
+  takeLatest(actionTypes.CREATE_FOLDER_REQUEST, createfolder),
+  takeLatest(actionTypes.CREATE_BOOKMARK_REQUEST, createbookmark),
+  takeEvery(actionTypes.EDIT_BOOKMARK_REQUEST, editbookmark),
+  takeLatest(actionTypes.ACCESS_FOLDERS_REQUEST, getfolder),
+  takeEvery(actionTypes.ACCESS_CHILDFOLDER_REQUEST, getchildfolder),
+  takeLatest(actionTypes.ACCESS_BOOKMARKS_REQUEST, getbookmark),
+  takeEvery(actionTypes.ACCESS_FOLDERDATA_REQUEST, getFolderdata),
+  takeLatest(actionTypes.DELETE_BOOKMARK_REQUEST, deletebookmarks),
+  takeEvery(actionTypes.DELETE_FOLDER_REQUEST, deletefolder),
+  takeEvery(actionTypes.CREATE_RENAME_REQUEST, renamefolder),
+  takeEvery(actionTypes.CREATE_SUBFOLDER_REQUEST, createsubfolder),
   takeLatest(actionTypes.SIGNUP_REQUEST, signup)
 ];

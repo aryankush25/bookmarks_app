@@ -1,0 +1,110 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.header-container {
+  padding: 9px 48px;
+
+  section {
+    width: 65%;
+    color: white;
+    // margin-left: -18px;
+    margin-right: 8px;
+  }
+
+  .main {
+    margin: 10px 10px;
+    display: flex;
+    background-color: #5960c1;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    min-height: 100px;
+    max-height: 400px;
+  }
+
+  .main ::after {
+    clear: both;
+    display: table;
+  }
+
+  .select-folder-input {
+    padding: 5px 5px;
+    background-color: #686fc5;
+    width: 60%;
+    color: #5960c1;
+    margin: 30px 30px;
+    display: inline-block;
+    // border: 1px solid #686fc5;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-top: -2px;
+  }
+  .folder-h1 {
+    padding: 12px 12px 12px 0;
+    padding-left: 40px;
+    margin-right: auto;
+    color: white;
+    display: inline-block;
+  }
+
+  label {
+    padding: 12px 12px 12px 0;
+    padding-left: 40px;
+    margin-right: auto;
+    color: white;
+    display: inline-block;
+  }
+  .add-quick {
+    padding-left: 40px;
+  }
+  .img-container {
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    justify-content: center;
+  }
+  .btn {
+    background-color: white;
+    color: black;
+    font-size: 24px;
+    border: 1px;
+    float: right;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    margin-right: 7%;
+    font-family: poppins;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    padding-bottom: 5px;
+  }
+
+  .right {
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    min-height: fit-content;
+    max-height: fit-content;
+    min-width: fit-content;
+    max-width: fit-content;
+  }
+
+  input:focus {
+    outline: none;
+    color: white;
+    background-color: #686fc5;
+  }
+
+  $WHITE_COLOR: #fff;
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: $WHITE_COLOR !important;
+  }
+}
